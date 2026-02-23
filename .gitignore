@@ -1,0 +1,10 @@
+plantcure_env/
+PlantVillage/
+__pycache__/
+*.pyc
+*.h5
+uploads/
+model/
+*.dll
+*.so
+*.pyd
