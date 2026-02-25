@@ -3,202 +3,358 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌿 PlantCure AI - Plant Disease Detector</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
-
-  /* HERO SECTION */
-  .hero {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0f4c1e 0%, #1a7a3c 30%, #2ecc71 60%, #27ae60 100%);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
-    animation: float 6s ease-in-out infinite;
-  }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
-
-  .hero-badge {
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    color: white; padding: 8px 20px;
-    border-radius: 50px; font-size: 14px;
-    margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.3);
-    animation: fadeInDown 1s ease;
-  }
-  .hero h1 {
-    font-size: 72px; font-weight: 800;
-    color: white; line-height: 1.1;
-    margin-bottom: 20px;
-    animation: fadeInUp 1s ease 0.2s both;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  }
-  .hero h1 span { color: #a8ff78; }
-  .hero p {
-    font-size: 20px; color: rgba(255,255,255,0.9);
-    max-width: 600px; margin-bottom: 40px;
-    animation: fadeInUp 1s ease 0.4s both;
-  }
-  .hero-btns { display: flex; gap: 20px; animation: fadeInUp 1s ease 0.6s both; }
-  .btn-primary {
-    background: white; color: #1a7a3c;
-    padding: 18px 40px; border-radius: 50px;
-    font-size: 18px; font-weight: 700;
-    text-decoration: none; transition: all 0.3s;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-  .btn-secondary {
-    background: transparent; color: white;
-    padding: 18px 40px; border-radius: 50px;
-    font-size: 18px; font-weight: 600;
-    text-decoration: none; border: 2px solid white;
-    transition: all 0.3s;
-  }
-  .btn-secondary:hover { background: white; color: #1a7a3c; }
-
-  /* FLOATING LEAVES */
-  .leaf { position: absolute; font-size: 40px; animation: leafFloat 8s infinite; opacity: 0.3; }
-  .leaf:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-  .leaf:nth-child(2) { top: 70%; left: 8%; animation-delay: 2s; }
-  .leaf:nth-child(3) { top: 20%; right: 5%; animation-delay: 4s; }
-  .leaf:nth-child(4) { top: 80%; right: 8%; animation-delay: 1s; }
-  @keyframes leafFloat { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-30px) rotate(15deg)} }
-
-  /* STATS */
-  .stats {
-    background: white; padding: 40px;
-    display: flex; justify-content: center; gap: 60px;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-  }
-  .stat { text-align: center; }
-  .stat-number { font-size: 42px; font-weight: 800; color: #1a7a3c; }
-  .stat-label { font-size: 14px; color: #666; }
-
-  /* FEATURES */
-  .features { padding: 80px 40px; background: #f8fff8; text-align: center; }
-  .features h2 { font-size: 42px; font-weight: 800; color: #1a7a3c; margin-bottom: 10px; }
-  .features p { color: #666; font-size: 18px; margin-bottom: 50px; }
-  .features-grid { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; max-width: 1100px; margin: 0 auto; }
-  .feature-card {
-    background: white; padding: 40px 30px;
-    border-radius: 20px; width: 280px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    transition: all 0.3s; border-top: 4px solid #2ecc71;
-  }
-  .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
-  .feature-icon { font-size: 50px; margin-bottom: 20px; }
-  .feature-card h3 { font-size: 20px; font-weight: 700; color: #1a7a3c; margin-bottom: 10px; }
-  .feature-card p { color: #666; font-size: 14px; line-height: 1.6; }
-
-  /* HOW IT WORKS */
-  .how { padding: 80px 40px; background: linear-gradient(135deg, #1a7a3c, #2ecc71); text-align: center; }
-  .how h2 { font-size: 42px; font-weight: 800; color: white; margin-bottom: 50px; }
-  .steps-grid { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
-  .step-card {
-    background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
-    padding: 40px 30px; border-radius: 20px; width: 220px;
-    border: 1px solid rgba(255,255,255,0.3); color: white;
-  }
-  .step-num { font-size: 48px; font-weight: 800; color: #a8ff78; margin-bottom: 15px; }
-  .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-  .step-card p { font-size: 14px; opacity: 0.9; }
-
-  /* CTA */
-  .cta { padding: 80px 40px; background: #fff; text-align: center; }
-  .cta h2 { font-size: 42px; font-weight: 800; color: #1a7a3c; margin-bottom: 20px; }
-  .cta p { color: #666; font-size: 18px; margin-bottom: 40px; }
-  .cta-btn {
-    background: linear-gradient(135deg, #1a7a3c, #2ecc71);
-    color: white; padding: 20px 60px; border-radius: 50px;
-    font-size: 20px; font-weight: 700; text-decoration: none;
-    box-shadow: 0 10px 30px rgba(46,204,113,0.4);
-    transition: all 0.3s; display: inline-block;
-  }
-  .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(46,204,113,0.5); }
-
-  /* FOOTER */
-  footer { background: #0f4c1e; color: white; text-align: center; padding: 30px; }
-  footer p { opacity: 0.7; }
-
-  @keyframes fadeInDown { from{opacity:0;transform:translateY(-30px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-</style>
-<!-- PWA Setup -->
+<title>🌿 PlantCure AI</title>
 <link rel="manifest" href="/static/manifest.json">
 <meta name="theme-color" content="#2ecc71">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="PlantCure AI">
-<link rel="apple-touch-icon" href="/static/images/icon-192.png">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/static/sw.js')
-      .then(() => console.log('✅ PWA Ready!'))
-      .catch(err => console.log('PWA Error:', err));
-  });
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;overflow-x:hidden;}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:rgba(15,76,30,0.95);backdrop-filter:blur(20px);
+  padding:15px 40px;display:flex;
+  align-items:center;justify-content:space-between;
+  box-shadow:0 4px 30px rgba(0,0,0,0.3);
 }
-</script>
+.nav-logo{color:white;font-size:24px;font-weight:900;letter-spacing:-1px;}
+.nav-logo span{color:#a8ff78;}
+.nav-btn{
+  background:linear-gradient(135deg,#a8ff78,#78ffd6);
+  color:#0f4c1e;padding:10px 25px;border-radius:50px;
+  font-weight:700;text-decoration:none;font-size:14px;
+  transition:all 0.3s;box-shadow:0 4px 15px rgba(168,255,120,0.4);
+}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(168,255,120,0.6);}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0f4c1e 0%,#1a7a3c 25%,#16a085 50%,#8e44ad 75%,#2980b9 100%);
+  background-size:400% 400%;
+  animation:gradientShift 8s ease infinite;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;position:relative;overflow:hidden;
+  padding-top:80px;
+}
+@keyframes gradientShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* Animated circles */
+.circle{
+  position:absolute;border-radius:50%;
+  animation:pulse 4s ease-in-out infinite;
+  opacity:0.1;
+}
+.circle1{width:600px;height:600px;background:#a8ff78;top:-200px;right:-200px;animation-delay:0s;}
+.circle2{width:400px;height:400px;background:#78ffd6;bottom:-100px;left:-100px;animation-delay:2s;}
+.circle3{width:200px;height:200px;background:white;top:50%;left:10%;animation-delay:1s;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.hero-badge{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  color:white;padding:10px 25px;border-radius:50px;
+  font-size:14px;font-weight:600;margin-bottom:25px;
+  border:1px solid rgba(255,255,255,0.3);
+  animation:fadeInDown 1s ease;
+  display:inline-flex;align-items:center;gap:8px;
+}
+
+.hero h1{
+  font-size:80px;font-weight:900;color:white;
+  line-height:1.0;margin-bottom:20px;
+  animation:fadeInUp 1s ease 0.2s both;
+  text-shadow:0 4px 30px rgba(0,0,0,0.3);
+}
+.hero h1 .line2{
+  background:linear-gradient(135deg,#a8ff78,#78ffd6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{
+  font-size:20px;color:rgba(255,255,255,0.9);
+  max-width:550px;margin-bottom:40px;line-height:1.7;
+  animation:fadeInUp 1s ease 0.4s both;
+}
+.hero-btns{
+  display:flex;gap:20px;flex-wrap:wrap;
+  justify-content:center;
+  animation:fadeInUp 1s ease 0.6s both;
+}
+.btn-main{
+  background:linear-gradient(135deg,#a8ff78,#78ffd6);
+  color:#0f4c1e;padding:20px 50px;border-radius:50px;
+  font-size:18px;font-weight:800;text-decoration:none;
+  transition:all 0.3s;box-shadow:0 10px 40px rgba(168,255,120,0.4);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-main:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(168,255,120,0.6);}
+.btn-outline{
+  background:transparent;color:white;
+  padding:20px 50px;border-radius:50px;
+  font-size:18px;font-weight:700;text-decoration:none;
+  border:2px solid rgba(255,255,255,0.5);transition:all 0.3s;
+}
+.btn-outline:hover{background:rgba(255,255,255,0.15);border-color:white;}
+
+/* FLOATING EMOJIS */
+.floats{position:absolute;width:100%;height:100%;pointer-events:none;}
+.float-item{
+  position:absolute;font-size:35px;
+  animation:floatAnim 6s ease-in-out infinite;opacity:0.6;
+}
+.f1{top:15%;left:5%;animation-delay:0s;}
+.f2{top:70%;left:5%;animation-delay:1s;}
+.f3{top:15%;right:5%;animation-delay:2s;}
+.f4{top:75%;right:5%;animation-delay:3s;}
+.f5{top:40%;left:2%;animation-delay:1.5s;}
+.f6{top:40%;right:2%;animation-delay:2.5s;}
+@keyframes floatAnim{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-25px) rotate(10deg)}
+}
+
+/* SCROLL INDICATOR */
+.scroll-indicator{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,0.7);font-size:13px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:bounce2 2s infinite;
+}
+@keyframes bounce2{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
+
+/* STATS */
+.stats{
+  background:white;padding:50px 40px;
+  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+}
+.stat{
+  text-align:center;padding:20px 50px;
+  border-right:1px solid #f0f0f0;
+}
+.stat:last-child{border-right:none;}
+.stat-num{
+  font-size:48px;font-weight:900;
+  background:linear-gradient(135deg,#0f4c1e,#2ecc71);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label{font-size:14px;color:#666;margin-top:5px;}
+
+/* FEATURES */
+.features{
+  padding:100px 40px;
+  background:linear-gradient(180deg,#f0fff4 0%,#e8f5e9 100%);
+  text-align:center;
+}
+.section-badge{
+  display:inline-block;background:linear-gradient(135deg,#a8ff78,#78ffd6);
+  color:#0f4c1e;padding:8px 20px;border-radius:50px;
+  font-size:13px;font-weight:700;margin-bottom:15px;
+}
+.features h2{font-size:48px;font-weight:900;color:#0f4c1e;margin-bottom:15px;}
+.features p{color:#666;font-size:18px;margin-bottom:60px;}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;max-width:1200px;margin:0 auto;
+}
+.feat-card{
+  background:white;padding:45px 35px;border-radius:25px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.06);
+  transition:all 0.4s;position:relative;overflow:hidden;
+  border:1px solid rgba(46,204,113,0.1);
+}
+.feat-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:100%;height:4px;
+  background:linear-gradient(135deg,#a8ff78,#2ecc71);
+}
+.feat-card:hover{
+  transform:translateY(-15px);
+  box-shadow:0 30px 60px rgba(46,204,113,0.15);
+}
+.feat-icon{
+  width:70px;height:70px;border-radius:20px;
+  background:linear-gradient(135deg,#f0fff4,#e8f5e9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:35px;margin:0 auto 20px;
+}
+.feat-card h3{font-size:20px;font-weight:800;color:#0f4c1e;margin-bottom:10px;}
+.feat-card p{color:#666;font-size:14px;line-height:1.7;}
+
+/* HOW IT WORKS */
+.how{
+  padding:100px 40px;
+  background:linear-gradient(135deg,#0f4c1e 0%,#1a7a3c 50%,#16a085 100%);
+  text-align:center;
+}
+.how h2{font-size:48px;font-weight:900;color:white;margin-bottom:60px;}
+.steps{display:flex;gap:0;justify-content:center;flex-wrap:wrap;position:relative;}
+.step{
+  background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);
+  padding:45px 35px;border-radius:25px;width:230px;
+  border:1px solid rgba(255,255,255,0.2);color:white;
+  position:relative;margin:15px;
+}
+.step-num{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,#a8ff78,#78ffd6);
+  color:#0f4c1e;font-size:24px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+}
+.step h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+.step p{font-size:13px;opacity:0.85;line-height:1.6;}
+
+/* NEW FEATURES SECTION */
+.new-features{
+  padding:100px 40px;background:white;text-align:center;
+}
+.new-features h2{font-size:48px;font-weight:900;color:#0f4c1e;margin-bottom:60px;}
+.nf-grid{
+  display:flex;gap:30px;justify-content:center;flex-wrap:wrap;
+  max-width:1100px;margin:0 auto;
+}
+.nf-card{
+  background:linear-gradient(135deg,#0f4c1e,#1a7a3c);
+  padding:45px 35px;border-radius:25px;width:300px;
+  color:white;text-align:center;transition:all 0.3s;
+  box-shadow:0 15px 40px rgba(15,76,30,0.3);
+}
+.nf-card:hover{transform:translateY(-10px);}
+.nf-icon{font-size:55px;margin-bottom:20px;}
+.nf-card h3{font-size:20px;font-weight:800;margin-bottom:12px;}
+.nf-card p{font-size:14px;opacity:0.85;line-height:1.6;}
+.nf-badge{
+  display:inline-block;background:rgba(168,255,120,0.2);
+  color:#a8ff78;padding:5px 15px;border-radius:50px;
+  font-size:11px;font-weight:700;margin-top:15px;
+  border:1px solid rgba(168,255,120,0.3);
+}
+
+/* CTA */
+.cta{
+  padding:100px 40px;
+  background:linear-gradient(135deg,#667eea,#764ba2,#f64f59,#c471ed);
+  background-size:400% 400%;
+  animation:gradientShift 6s ease infinite;
+  text-align:center;
+}
+.cta h2{font-size:52px;font-weight:900;color:white;margin-bottom:20px;}
+.cta p{color:rgba(255,255,255,0.9);font-size:20px;margin-bottom:40px;}
+.cta-btn{
+  background:white;color:#764ba2;
+  padding:22px 60px;border-radius:50px;
+  font-size:20px;font-weight:800;text-decoration:none;
+  box-shadow:0 15px 50px rgba(0,0,0,0.2);
+  transition:all 0.3s;display:inline-block;
+}
+.cta-btn:hover{transform:translateY(-5px);box-shadow:0 25px 70px rgba(0,0,0,0.3);}
+
+/* FOOTER */
+footer{
+  background:#0a2e12;color:white;
+  text-align:center;padding:40px;
+}
+footer p{opacity:0.6;font-size:14px;}
+
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero h1{font-size:42px;}
+  .navbar{padding:15px 20px;}
+  .stat{padding:20px 25px;}
+  .stat-num{font-size:36px;}
+  .features h2,.how h2,.cta h2{font-size:32px;}
+}
+</style>
 </head>
 <body>
 
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">🌿 Plant<span>Cure</span> AI</div>
+  <a href="/login" class="nav-btn">🚀 Get Started</a>
+</nav>
+
 <!-- HERO -->
 <section class="hero">
-  <div class="leaf">🌿</div>
-  <div class="leaf">🍃</div>
-  <div class="leaf">🌱</div>
-  <div class="leaf">🍀</div>
-  <div class="hero-badge">🤖 AI Powered Plant Disease Detection</div>
-  <h1>Detect Plant<br><span>Diseases Instantly</span></h1>
-  <p>Upload a leaf photo and get instant AI-powered disease diagnosis with complete treatment solutions</p>
+  <div class="floats">
+    <div class="float-item f1">🌿</div>
+    <div class="float-item f2">🍃</div>
+    <div class="float-item f3">🌱</div>
+    <div class="float-item f4">🍀</div>
+    <div class="float-item f5">🌾</div>
+    <div class="float-item f6">🌻</div>
+  </div>
+  <div class="circle circle1"></div>
+  <div class="circle circle2"></div>
+  <div class="circle circle3"></div>
+
+  <div class="hero-badge">🤖 AI Powered • 38+ Diseases • 95% Accuracy</div>
+  <h1>Detect Plant<br><span class="line2">Diseases Instantly</span></h1>
+  <p>Upload a leaf photo or use live camera. Get AI-powered disease diagnosis with complete 7-point treatment solution in 3 seconds!</p>
   <div class="hero-btns">
-    <a href="/login" class="btn-primary">🚀 Get Started Free</a>
-    <a href="#features" class="btn-secondary">Learn More</a>
+    <a href="/login" class="btn-main">📸 Scan Your Plant</a>
+    <a href="#features" class="btn-outline">Learn More ↓</a>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll to explore</span>
+    <span>↓</span>
   </div>
 </section>
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat"><div class="stat-number">38+</div><div class="stat-label">Diseases Detected</div></div>
-  <div class="stat"><div class="stat-number">95%</div><div class="stat-label">Accuracy Rate</div></div>
-  <div class="stat"><div class="stat-number">50K+</div><div class="stat-label">Plants Analyzed</div></div>
-  <div class="stat"><div class="stat-number">3sec</div><div class="stat-label">Analysis Time</div></div>
+  <div class="stat"><div class="stat-num">38+</div><div class="stat-label">Diseases Detected</div></div>
+  <div class="stat"><div class="stat-num">95%</div><div class="stat-label">AI Accuracy</div></div>
+  <div class="stat"><div class="stat-num">3s</div><div class="stat-label">Analysis Time</div></div>
+  <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Forever</div></div>
 </div>
 
 <!-- FEATURES -->
 <section class="features" id="features">
-  <h2>🌟 Why PlantCure AI?</h2>
-  <p>Everything you need to keep your plants healthy</p>
+  <div class="section-badge">✨ Why PlantCure AI?</div>
+  <h2>Everything You Need</h2>
+  <p>Complete plant health management in one app</p>
   <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🔬</div>
-      <h3>Instant Analysis</h3>
-      <p>Get disease diagnosis in under 3 seconds with our advanced AI model trained on 50,000+ plant images</p>
+    <div class="feat-card">
+      <div class="feat-icon">🔬</div>
+      <h3>Instant AI Analysis</h3>
+      <p>Advanced deep learning model trained on 50,000+ plant images gives results in 3 seconds</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">💊</div>
+    <div class="feat-card">
+      <div class="feat-icon">📷</div>
+      <h3>Live Camera</h3>
+      <p>Point your camera at any leaf and get instant real-time disease detection without uploading</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">💊</div>
       <h3>7-Point Solution</h3>
-      <p>Receive complete treatment plan including fertilizer recommendations and organic alternatives</p>
+      <p>Complete treatment plan with fertilizer recommendations and organic alternatives</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">📱</div>
-      <h3>Works Everywhere</h3>
-      <p>Access from any device - mobile, tablet, or desktop. No app download required!</p>
+    <div class="feat-card">
+      <div class="feat-icon">📊</div>
+      <h3>Analysis History</h3>
+      <p>Track all your plant analyses, monitor disease progression and treatment results</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">🌾</div>
+    <div class="feat-card">
+      <div class="feat-icon">📍</div>
+      <h3>Nearby Agri Shops</h3>
+      <p>Find nearest agricultural shops to buy recommended fertilizers and pesticides</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🌾</div>
       <h3>38+ Diseases</h3>
-      <p>Detects diseases in Tomato, Potato, Corn, Apple, Grape and 10+ more plant varieties</p>
+      <p>Covers Tomato, Potato, Corn, Apple, Grape and 10+ more plant varieties</p>
     </div>
   </div>
 </section>
@@ -206,24 +362,70 @@ if ('serviceWorker' in navigator) {
 <!-- HOW IT WORKS -->
 <section class="how">
   <h2>🔄 How It Works</h2>
-  <div class="steps-grid">
-    <div class="step-card"><div class="step-num">1</div><h3>Login</h3><p>Sign in with your Google account securely</p></div>
-    <div class="step-card"><div class="step-num">2</div><h3>Upload</h3><p>Take a photo of the affected leaf</p></div>
-    <div class="step-card"><div class="step-num">3</div><h3>Analyze</h3><p>AI analyzes the image instantly</p></div>
-    <div class="step-card"><div class="step-num">4</div><h3>Solution</h3><p>Get complete 7-point treatment plan</p></div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Login</h3>
+      <p>Sign in with Google account in one click</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Scan / Upload</h3>
+      <p>Use live camera or upload leaf photo</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>AI Analyzes</h3>
+      <p>Deep learning model detects disease instantly</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Get Solution</h3>
+      <p>Receive 7-point complete treatment plan</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEW FEATURES -->
+<section class="new-features">
+  <h2>🆕 Powerful New Features</h2>
+  <div class="nf-grid">
+    <div class="nf-card">
+      <div class="nf-icon">📷</div>
+      <h3>Live Camera Scan</h3>
+      <p>Open camera directly in the app. Point at leaf and analyze without taking a photo separately</p>
+      <div class="nf-badge">NEW FEATURE</div>
+    </div>
+    <div class="nf-card">
+      <div class="nf-icon">📊</div>
+      <h3>History & Reports</h3>
+      <p>Save all analysis results. Track which plants were treated and monitor recovery progress</p>
+      <div class="nf-badge">NEW FEATURE</div>
+    </div>
+    <div class="nf-card">
+      <div class="nf-icon">📍</div>
+      <h3>Find Agri Shops</h3>
+      <p>Locate nearest agricultural shops on map to purchase recommended fertilizers instantly</p>
+      <div class="nf-badge">NEW FEATURE</div>
+    </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta">
-  <h2>Ready to Save Your Plants? 🌱</h2>
+  <h2>Save Your Plants Today! 🌱</h2>
   <p>Join thousands of farmers using PlantCure AI</p>
-  <a href="/login" class="cta-btn">🚀 Start Detecting Now - It's Free!</a>
+  <a href="/login" class="cta-btn">🚀 Start For Free!</a>
 </section>
 
 <footer>
-  <p>🌿 PlantCure AI © 2024 | Saving Plants with Artificial Intelligence</p>
+  <p>🌿 PlantCure AI © 2024 | Saving Plants with Artificial Intelligence | Made with ❤️ for Farmers</p>
 </footer>
 
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/static/sw.js');
+}
+</script>
 </body>
 </html>
