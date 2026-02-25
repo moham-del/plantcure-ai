@@ -1,0 +1,543 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "url_for",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "session",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "send_from_directory",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "tensorflow",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tensorflow",
+        "description": "tensorflow",
+        "detail": "tensorflow",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDataGenerator",
+        "importPath": "tensorflow.keras.preprocessing.image",
+        "description": "tensorflow.keras.preprocessing.image",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.preprocessing.image",
+        "documentation": {}
+    },
+    {
+        "label": "MobileNetV2",
+        "importPath": "tensorflow.keras.applications",
+        "description": "tensorflow.keras.applications",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.applications",
+        "documentation": {}
+    },
+    {
+        "label": "Dense",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "GlobalAveragePooling2D",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Dropout",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Model",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_solution",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_solution(class_name):\n    for key in disease_solutions:\n        if key.lower() in class_name.lower():\n            return disease_solutions[key]\n    return {\n        \"disease\": class_name.replace('_', ' '),\n        \"severity\": \"Medium\",\n        \"cause\": \"Fungal or bacterial infection\",\n        \"symptoms\": \"Visible spots or discoloration on leaves\",\n        \"solutions\": [",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "predict_disease",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def predict_disease(image_path):\n    # Real model prediction\n    if model is not None:\n        try:\n            img = Image.open(image_path).convert('RGB').resize((224, 224))\n            img_array = np.array(img) / 255.0\n            img_array = np.expand_dims(img_array, axis=0)\n            predictions = model.predict(img_array)\n            predicted_index = np.argmax(predictions[0])\n            confidence = float(predictions[0][predicted_index]) * 100",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def home():\n    return render_template('home.html')\n@app.route('/login')\ndef login():\n    return render_template('login.html')\n@app.route('/guest_login')\ndef guest_login():\n    session['user'] = 'Guest User'\n    session['email'] = 'guest@plantcure.ai'\n    return redirect(url_for('dashboard'))",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def login():\n    return render_template('login.html')\n@app.route('/guest_login')\ndef guest_login():\n    session['user'] = 'Guest User'\n    session['email'] = 'guest@plantcure.ai'\n    return redirect(url_for('dashboard'))\n@app.route('/google_login', methods=['POST'])\ndef google_login():\n    data = request.get_json()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "guest_login",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def guest_login():\n    session['user'] = 'Guest User'\n    session['email'] = 'guest@plantcure.ai'\n    return redirect(url_for('dashboard'))\n@app.route('/google_login', methods=['POST'])\ndef google_login():\n    data = request.get_json()\n    session['user'] = data.get('name', 'User')\n    session['email'] = data.get('email', '')\n    session['photo'] = data.get('photo', '')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "google_login",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def google_login():\n    data = request.get_json()\n    session['user'] = data.get('name', 'User')\n    session['email'] = data.get('email', '')\n    session['photo'] = data.get('photo', '')\n    return jsonify({'success': True})\n@app.route('/dashboard')\ndef dashboard():\n    if 'user' not in session:\n        return redirect(url_for('login'))",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "dashboard",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def dashboard():\n    if 'user' not in session:\n        return redirect(url_for('login'))\n    return render_template('dashboard.html', user=session['user'])\n@app.route('/analyze', methods=['POST'])\ndef analyze():\n    if 'user' not in session:\n        return jsonify({'error': 'Please login first'})\n    if 'file' not in request.files:\n        return jsonify({'error': 'No file uploaded'})",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "analyze",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def analyze():\n    if 'user' not in session:\n        return jsonify({'error': 'Please login first'})\n    if 'file' not in request.files:\n        return jsonify({'error': 'No file uploaded'})\n    file = request.files['file']\n    if file.filename == '':\n        return jsonify({'error': 'No file selected'})\n    filename = str(uuid.uuid4()) + '.jpg'\n    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "sw",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def sw():\n    return send_from_directory('static', 'sw.js',\n    mimetype='application/javascript')\n@app.route('/logout')\ndef logout():\n    session.clear()\n    return redirect(url_for('home'))\nif __name__ == '__main__':\n    port = int(os.environ.get('PORT', 5000))\n    app.run(host='0.0.0.0', port=port, debug=False)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def logout():\n    session.clear()\n    return redirect(url_for('home'))\nif __name__ == '__main__':\n    port = int(os.environ.get('PORT', 5000))\n    app.run(host='0.0.0.0', port=port, debug=False)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\napp.secret_key = 'plantcure_secret_key_2024'\nUPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.secret_key",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.secret_key = 'plantcure_secret_key_2024'\nUPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:\n    import tensorflow as tf",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "UPLOAD_FOLDER",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "UPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['UPLOAD_FOLDER']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        model = tf.keras.models.load_model('model/plantcure_model.h5')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "model = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        model = tf.keras.models.load_model('model/plantcure_model.h5')\n        with open('model/class_names.json', 'r') as f:\n            class_names = json.load(f)\n        print(\"✅ Model Loaded!\")\n    else:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "class_names",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "class_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        model = tf.keras.models.load_model('model/plantcure_model.h5')\n        with open('model/class_names.json', 'r') as f:\n            class_names = json.load(f)\n        print(\"✅ Model Loaded!\")\n    else:\n        print(\"⚠️ Model not found - Running in Demo mode\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "disease_solutions",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "disease_solutions = {\n    \"Tomato_Early_blight\": {\n        \"disease\": \"Tomato Early Blight\",\n        \"severity\": \"Medium\",\n        \"cause\": \"Fungal infection by Alternaria solani\",\n        \"symptoms\": \"Dark brown spots with yellow rings on leaves\",\n        \"solutions\": [\n            \"Remove infected leaves immediately\",\n            \"Apply copper-based fungicide\",\n            \"Avoid overhead watering\",",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "create_icon",
+        "kind": 2,
+        "importPath": "create_icon",
+        "description": "create_icon",
+        "peekOfCode": "def create_icon(size):\n    # Green background\n    img = Image.new('RGB', (size, size), color='#0f4c1e')\n    draw = ImageDraw.Draw(img)\n    # Circle\n    margin = size // 10\n    draw.ellipse(\n        [margin, margin, size-margin, size-margin],\n        fill='#2ecc71'\n    )",
+        "detail": "create_icon",
+        "documentation": {}
+    },
+    {
+        "label": "DATASET_PATH",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "DATASET_PATH = \"PlantVillage\"  # உங்க dataset folder name\nIMAGE_SIZE = (224, 224)\nBATCH_SIZE = 32\nEPOCHS = 10  # 10 rounds train பண்ணும்\nprint(\"=\" * 50)\nprint(\"🌿 PlantCure AI - Model Training Started!\")\nprint(\"=\" * 50)\n# ============================================\n# STEP 1: Dataset Load பண்ணு\n# ============================================",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "IMAGE_SIZE",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "IMAGE_SIZE = (224, 224)\nBATCH_SIZE = 32\nEPOCHS = 10  # 10 rounds train பண்ணும்\nprint(\"=\" * 50)\nprint(\"🌿 PlantCure AI - Model Training Started!\")\nprint(\"=\" * 50)\n# ============================================\n# STEP 1: Dataset Load பண்ணு\n# ============================================\nprint(\"\\n📂 Loading Dataset...\")",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "BATCH_SIZE",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "BATCH_SIZE = 32\nEPOCHS = 10  # 10 rounds train பண்ணும்\nprint(\"=\" * 50)\nprint(\"🌿 PlantCure AI - Model Training Started!\")\nprint(\"=\" * 50)\n# ============================================\n# STEP 1: Dataset Load பண்ணு\n# ============================================\nprint(\"\\n📂 Loading Dataset...\")\ndatagen = ImageDataGenerator(",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "EPOCHS",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "EPOCHS = 10  # 10 rounds train பண்ணும்\nprint(\"=\" * 50)\nprint(\"🌿 PlantCure AI - Model Training Started!\")\nprint(\"=\" * 50)\n# ============================================\n# STEP 1: Dataset Load பண்ணு\n# ============================================\nprint(\"\\n📂 Loading Dataset...\")\ndatagen = ImageDataGenerator(\n    rescale=1./255,",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "datagen",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "datagen = ImageDataGenerator(\n    rescale=1./255,\n    validation_split=0.2,\n    rotation_range=20,\n    zoom_range=0.2,\n    horizontal_flip=True\n)\ntrain_data = datagen.flow_from_directory(\n    DATASET_PATH,\n    target_size=IMAGE_SIZE,",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "train_data",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "train_data = datagen.flow_from_directory(\n    DATASET_PATH,\n    target_size=IMAGE_SIZE,\n    batch_size=BATCH_SIZE,\n    subset='training',\n    class_mode='categorical'\n)\nval_data = datagen.flow_from_directory(\n    DATASET_PATH,\n    target_size=IMAGE_SIZE,",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "val_data",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "val_data = datagen.flow_from_directory(\n    DATASET_PATH,\n    target_size=IMAGE_SIZE,\n    batch_size=BATCH_SIZE,\n    subset='validation',\n    class_mode='categorical'\n)\n# Class names save பண்ணு\nclass_names = list(train_data.class_indices.keys())\nnum_classes = len(class_names)",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "class_names",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "class_names = list(train_data.class_indices.keys())\nnum_classes = len(class_names)\nprint(f\"✅ Total Classes Found: {num_classes}\")\nprint(f\"✅ Training Images: {train_data.samples}\")\nprint(f\"✅ Validation Images: {val_data.samples}\")\n# Save class names\nwith open('model/class_names.json', 'w') as f:\n    json.dump(class_names, f)\nprint(\"✅ Class names saved!\")\n# ============================================",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "num_classes",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "num_classes = len(class_names)\nprint(f\"✅ Total Classes Found: {num_classes}\")\nprint(f\"✅ Training Images: {train_data.samples}\")\nprint(f\"✅ Validation Images: {val_data.samples}\")\n# Save class names\nwith open('model/class_names.json', 'w') as f:\n    json.dump(class_names, f)\nprint(\"✅ Class names saved!\")\n# ============================================\n# STEP 2: AI Model Create பண்ணு",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "base_model",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "base_model = MobileNetV2(\n    weights='imagenet',\n    include_top=False,\n    input_shape=(224, 224, 3)\n)\nbase_model.trainable = False\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(512, activation='relu')(x)\nx = Dropout(0.3)(x)",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "base_model.trainable",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "base_model.trainable = False\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(512, activation='relu')(x)\nx = Dropout(0.3)(x)\nx = Dense(256, activation='relu')(x)\nx = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "x = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(512, activation='relu')(x)\nx = Dropout(0.3)(x)\nx = Dense(256, activation='relu')(x)\nx = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "x = GlobalAveragePooling2D()(x)\nx = Dense(512, activation='relu')(x)\nx = Dropout(0.3)(x)\nx = Dense(256, activation='relu')(x)\nx = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "x = Dense(512, activation='relu')(x)\nx = Dropout(0.3)(x)\nx = Dense(256, activation='relu')(x)\nx = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',\n    metrics=['accuracy']",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "x = Dropout(0.3)(x)\nx = Dense(256, activation='relu')(x)\nx = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "x = Dense(256, activation='relu')(x)\nx = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)\nprint(\"✅ AI Model Ready!\")",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "x = Dropout(0.2)(x)\noutput = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)\nprint(\"✅ AI Model Ready!\")\nprint(f\"✅ Total Parameters: {model.count_params():,}\")",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "output",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "output = Dense(num_classes, activation='softmax')(x)\nmodel = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)\nprint(\"✅ AI Model Ready!\")\nprint(f\"✅ Total Parameters: {model.count_params():,}\")\n# ============================================",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "model = Model(inputs=base_model.input, outputs=output)\nmodel.compile(\n    optimizer='adam',\n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)\nprint(\"✅ AI Model Ready!\")\nprint(f\"✅ Total Parameters: {model.count_params():,}\")\n# ============================================\n# STEP 3: Training Start!",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "history",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "history = model.fit(\n    train_data,\n    epochs=EPOCHS,\n    validation_data=val_data,\n    verbose=1\n)\n# ============================================\n# STEP 4: Model Save பண்ணு\n# ============================================\nprint(\"\\n💾 Saving Model...\")",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "final_acc",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "final_acc = history.history['accuracy'][-1] * 100\nfinal_val_acc = history.history['val_accuracy'][-1] * 100\nprint(\"\\n\" + \"=\" * 50)\nprint(\"🎉 TRAINING COMPLETE!\")\nprint(f\"✅ Training Accuracy: {final_acc:.2f}%\")\nprint(f\"✅ Validation Accuracy: {final_val_acc:.2f}%\")\nprint(\"=\" * 50)\nprint(\"\\n✅ Now run: python app.py\")",
+        "detail": "train_model",
+        "documentation": {}
+    },
+    {
+        "label": "final_val_acc",
+        "kind": 5,
+        "importPath": "train_model",
+        "description": "train_model",
+        "peekOfCode": "final_val_acc = history.history['val_accuracy'][-1] * 100\nprint(\"\\n\" + \"=\" * 50)\nprint(\"🎉 TRAINING COMPLETE!\")\nprint(f\"✅ Training Accuracy: {final_acc:.2f}%\")\nprint(f\"✅ Validation Accuracy: {final_val_acc:.2f}%\")\nprint(\"=\" * 50)\nprint(\"\\n✅ Now run: python app.py\")",
+        "detail": "train_model",
+        "documentation": {}
+    }
+]

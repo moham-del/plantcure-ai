@@ -202,6 +202,17 @@
   .tip-card h4 { color:#1a7a3c; font-weight:700; margin-bottom:8px; }
   .tip-card p { color:#666; font-size:13px; line-height:1.5; }
 </style>
+<!-- PWA Setup -->
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#2ecc71">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PlantCure AI">
+<link rel="apple-touch-icon" href="/static/images/icon-192.png">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/static/sw.js');
+}
+</script>
 </head>
 <body>
 

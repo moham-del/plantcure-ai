@@ -132,6 +132,23 @@
   @keyframes fadeInDown { from{opacity:0;transform:translateY(-30px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 </style>
+<!-- PWA Setup -->
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#2ecc71">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PlantCure AI">
+<link rel="apple-touch-icon" href="/static/images/icon-192.png">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/static/sw.js')
+      .then(() => console.log('✅ PWA Ready!'))
+      .catch(err => console.log('PWA Error:', err));
+  });
+}
+</script>
 </head>
 <body>
 

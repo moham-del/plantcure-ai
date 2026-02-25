@@ -203,6 +203,12 @@ def analyze():
         'confidence': confidence,
         'solution': solution
     })
+from flask import send_from_directory
+
+@app.route('/static/sw.js')
+def sw():
+    return send_from_directory('static', 'sw.js',
+    mimetype='application/javascript')
 
 @app.route('/logout')
 def logout():

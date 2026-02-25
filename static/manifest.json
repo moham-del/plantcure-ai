@@ -1,0 +1,22 @@
+{
+  "name": "PlantCure AI",
+  "short_name": "PlantCure",
+  "description": "AI Plant Disease Detector",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f4c1e",
+  "theme_color": "#2ecc71",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+plantcure_env/
+__pycache__/
+*.pyc
+uploads/
+*.h5
+model/plantcure_model.h5
+.env
