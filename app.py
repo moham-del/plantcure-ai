@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, send_from_directory
 from PIL import Image
 import numpy as np
 import json
@@ -12,21 +12,50 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs('model', exist_ok=True)
 
-# Load Model safely
+
+MODEL_FILE_ID = "123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF"
+CLASS_FILE_ID = "1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP"
+
+def download_model():
+    if not os.path.exists('model/plantcure_model.h5'):
+        print("📥 Downloading model from Google Drive...")
+        try:
+            import gdown
+            url = f"https://drive.google.com/uc?id={MODEL_FILE_ID}"
+            gdown.download(url, 'model/plantcure_model.h5', quiet=False)
+            print("✅ Model downloaded!")
+        except Exception as e:
+            print(f"❌ Model download failed: {e}")
+
+    if not os.path.exists('model/class_names.json'):
+        print("📥 Downloading class names...")
+        try:
+            import gdown
+            url = f"https://drive.google.com/uc?id={CLASS_FILE_ID}"
+            gdown.download(url, 'model/class_names.json', quiet=False)
+            print("✅ Class names downloaded!")
+        except Exception as e:
+            print(f"❌ Class names download failed: {e}")
+
+# Download பண்ணு
+download_model()
+
+# Load Model
 model = None
 class_names = []
 
 try:
     import tensorflow as tf
     if os.path.exists('model/plantcure_model.h5'):
+        print("🌿 Loading AI Model...")
         model = tf.keras.models.load_model('model/plantcure_model.h5')
         with open('model/class_names.json', 'r') as f:
             class_names = json.load(f)
-        print("✅ Model Loaded!")
+        print("✅ Real AI Model Loaded!")
     else:
-        print("⚠️ Model not found - Running in Demo mode")
+        print("⚠️ Model not found - Demo mode active")
 except Exception as e:
-    print(f"⚠️ Model load error: {e} - Demo mode active")
+    print(f"⚠️ Model error: {e}")
 
 # Disease Solutions Database
 disease_solutions = {
@@ -134,7 +163,6 @@ def get_solution(class_name):
     }
 
 def predict_disease(image_path):
-    # Real model prediction
     if model is not None:
         try:
             img = Image.open(image_path).convert('RGB').resize((224, 224))
@@ -149,7 +177,6 @@ def predict_disease(image_path):
         except Exception as e:
             print(f"Prediction error: {e}")
 
-    # Demo mode - random result for testing
     import random
     demo_diseases = list(disease_solutions.keys())
     class_name = random.choice(demo_diseases)
@@ -203,7 +230,6 @@ def analyze():
         'confidence': confidence,
         'solution': solution
     })
-from flask import send_from_directory
 
 @app.route('/static/sw.js')
 def sw():
