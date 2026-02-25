@@ -17,12 +17,25 @@ MODEL_FILE_ID = "123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF"
 CLASS_FILE_ID = "1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP"
 
 def download_model():
+    os.makedirs('model', exist_ok=True)
+
     if not os.path.exists('model/plantcure_model.h5'):
         print("📥 Downloading model from Google Drive...")
         try:
-            import gdown
-            url = f"https://drive.google.com/uc?id={MODEL_FILE_ID}"
-            gdown.download(url, 'model/plantcure_model.h5', quiet=False)
+            import requests
+            def download_file(file_id, dest):
+                session = requests.Session()
+                url = "https://drive.google.com/uc?export=download"
+                response = session.get(url, params={'id': file_id}, stream=True)
+                for key, value in response.cookies.items():
+                    if key.startswith('download_warning'):
+                        response = session.get(url, params={'id': file_id, 'confirm': value}, stream=True)
+                        break
+                with open(dest, 'wb') as f:
+                    for chunk in response.iter_content(32768):
+                        if chunk:
+                            f.write(chunk)
+            download_file(MODEL_FILE_ID, 'model/plantcure_model.h5')
             print("✅ Model downloaded!")
         except Exception as e:
             print(f"❌ Model download failed: {e}")
@@ -30,17 +43,16 @@ def download_model():
     if not os.path.exists('model/class_names.json'):
         print("📥 Downloading class names...")
         try:
-            import gdown
-            url = f"https://drive.google.com/uc?id={CLASS_FILE_ID}"
-            gdown.download(url, 'model/class_names.json', quiet=False)
+            import requests
+            url = f"https://drive.google.com/uc?export=download&id={CLASS_FILE_ID}"
+            r = requests.get(url)
+            with open('model/class_names.json', 'wb') as f:
+                f.write(r.content)
             print("✅ Class names downloaded!")
         except Exception as e:
             print(f"❌ Class names download failed: {e}")
-
-# Download பண்ணு
 download_model()
 
-# Load Model
 model = None
 class_names = []
 
