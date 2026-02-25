@@ -243,15 +243,24 @@ if ('serviceWorker' in navigator) {
 <div class="upload-section">
   <h2>🔬 Analyze Your Plant Leaf</h2>
 
-  <div class="upload-box" id="uploadBox" onclick="document.getElementById('fileInput').click()">
-    <div class="upload-icon">🌿</div>
-    <h3>Drop Your Leaf Photo Here</h3>
-    <p>Take a clear photo of the affected leaf and upload it<br>Supports JPG, PNG, JPEG formats</p>
-    <button class="upload-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">
-      📸 Choose Photo
+<div class="upload-box" id="uploadBox">
+  <div class="upload-icon">🌿</div>
+  <h3>Analyze Your Plant Leaf</h3>
+  <p>Take a live photo or upload from gallery</p>
+  <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
+    <button class="upload-btn" style="background:linear-gradient(135deg,#e74c3c,#c0392b);"
+      onclick="openCamera()">
+      📷 Open Camera
     </button>
-    <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+    <button class="upload-btn"
+      onclick="document.getElementById('fileInput').click()">
+      🖼️ Choose Photo
+    </button>
   </div>
+  <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+  <input type="file" id="cameraInput" accept="image/*" capture="environment"
+    onchange="previewImage(event)" style="display:none">
+</div>
 
   <!-- PREVIEW -->
   <div class="preview-container" id="previewContainer">
@@ -370,6 +379,9 @@ if ('serviceWorker' in navigator) {
 
 <script>
 let selectedFile = null;
+function openCamera() {
+  document.getElementById('cameraInput').click();
+}
 
 function previewImage(event) {
   const file = event.target.files[0];

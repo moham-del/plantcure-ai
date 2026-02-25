@@ -11,304 +11,238 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Poppins',sans-serif;overflow-x:hidden;}
 
-/* NAVBAR */
-.navbar{
-  position:fixed;top:0;width:100%;z-index:1000;
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
   background:rgba(15,76,30,0.95);backdrop-filter:blur(20px);
-  padding:15px 40px;display:flex;
-  align-items:center;justify-content:space-between;
-  box-shadow:0 4px 30px rgba(0,0,0,0.3);
+  padding:15px 30px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 20px rgba(0,0,0,0.3);
 }
-.nav-logo{color:white;font-size:24px;font-weight:900;letter-spacing:-1px;}
+.nav-logo{color:white;font-size:20px;font-weight:800;}
 .nav-logo span{color:#a8ff78;}
 .nav-btn{
-  background:linear-gradient(135deg,#a8ff78,#78ffd6);
-  color:#0f4c1e;padding:10px 25px;border-radius:50px;
-  font-weight:700;text-decoration:none;font-size:14px;
-  transition:all 0.3s;box-shadow:0 4px 15px rgba(168,255,120,0.4);
+  background:linear-gradient(135deg,#2ecc71,#27ae60);
+  color:white;padding:10px 25px;border-radius:50px;
+  text-decoration:none;font-weight:700;font-size:14px;
+  transition:all 0.3s;box-shadow:0 4px 15px rgba(46,204,113,0.4);
 }
-.nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(168,255,120,0.6);}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(46,204,113,0.5);}
 
 /* HERO */
 .hero{
   min-height:100vh;
-  background:linear-gradient(135deg,#0f4c1e 0%,#1a7a3c 25%,#16a085 50%,#8e44ad 75%,#2980b9 100%);
-  background-size:400% 400%;
-  animation:gradientShift 8s ease infinite;
+  background:linear-gradient(135deg,#0a2e14 0%,#1a5c30 40%,#2ecc71 100%);
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  text-align:center;position:relative;overflow:hidden;
-  padding-top:80px;
+  text-align:center;padding:100px 20px 60px;
+  position:relative;overflow:hidden;
 }
-@keyframes gradientShift{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
-
-/* Animated circles */
-.circle{
-  position:absolute;border-radius:50%;
-  animation:pulse 4s ease-in-out infinite;
-  opacity:0.1;
-}
-.circle1{width:600px;height:600px;background:#a8ff78;top:-200px;right:-200px;animation-delay:0s;}
-.circle2{width:400px;height:400px;background:#78ffd6;bottom:-100px;left:-100px;animation-delay:2s;}
-.circle3{width:200px;height:200px;background:white;top:50%;left:10%;animation-delay:1s;}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-
 .hero-badge{
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);
   color:white;padding:10px 25px;border-radius:50px;
-  font-size:14px;font-weight:600;margin-bottom:25px;
-  border:1px solid rgba(255,255,255,0.3);
-  animation:fadeInDown 1s ease;
-  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;margin-bottom:30px;
+  border:1px solid rgba(255,255,255,0.2);
+  animation:fadeDown 0.8s ease;
 }
-
 .hero h1{
-  font-size:80px;font-weight:900;color:white;
-  line-height:1.0;margin-bottom:20px;
-  animation:fadeInUp 1s ease 0.2s both;
-  text-shadow:0 4px 30px rgba(0,0,0,0.3);
+  font-size:clamp(40px,8vw,80px);font-weight:900;
+  color:white;line-height:1.1;margin-bottom:20px;
+  animation:fadeUp 0.8s ease 0.2s both;
 }
-.hero h1 .line2{
+.hero h1 span{
   background:linear-gradient(135deg,#a8ff78,#78ffd6);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hero p{
-  font-size:20px;color:rgba(255,255,255,0.9);
-  max-width:550px;margin-bottom:40px;line-height:1.7;
-  animation:fadeInUp 1s ease 0.4s both;
+  font-size:clamp(16px,3vw,20px);color:rgba(255,255,255,0.85);
+  max-width:600px;margin-bottom:40px;line-height:1.7;
+  animation:fadeUp 0.8s ease 0.4s both;
 }
 .hero-btns{
-  display:flex;gap:20px;flex-wrap:wrap;
-  justify-content:center;
-  animation:fadeInUp 1s ease 0.6s both;
+  display:flex;gap:15px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 0.8s ease 0.6s both;
 }
-.btn-main{
-  background:linear-gradient(135deg,#a8ff78,#78ffd6);
-  color:#0f4c1e;padding:20px 50px;border-radius:50px;
-  font-size:18px;font-weight:800;text-decoration:none;
-  transition:all 0.3s;box-shadow:0 10px 40px rgba(168,255,120,0.4);
-  display:inline-flex;align-items:center;gap:10px;
+.btn-white{
+  background:white;color:#1a5c30;
+  padding:16px 35px;border-radius:50px;
+  font-size:16px;font-weight:800;text-decoration:none;
+  transition:all 0.3s;box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
-.btn-main:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(168,255,120,0.6);}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
 .btn-outline{
   background:transparent;color:white;
-  padding:20px 50px;border-radius:50px;
-  font-size:18px;font-weight:700;text-decoration:none;
+  padding:16px 35px;border-radius:50px;
+  font-size:16px;font-weight:700;text-decoration:none;
   border:2px solid rgba(255,255,255,0.5);transition:all 0.3s;
 }
-.btn-outline:hover{background:rgba(255,255,255,0.15);border-color:white;}
+.btn-outline:hover{background:white;color:#1a5c30;}
 
-/* FLOATING EMOJIS */
-.floats{position:absolute;width:100%;height:100%;pointer-events:none;}
-.float-item{
-  position:absolute;font-size:35px;
-  animation:floatAnim 6s ease-in-out infinite;opacity:0.6;
+/* FLOATING ELEMENTS */
+.float-leaf{
+  position:absolute;font-size:clamp(30px,5vw,60px);
+  animation:floatAnim 6s ease-in-out infinite;opacity:0.15;
 }
 .f1{top:15%;left:5%;animation-delay:0s;}
-.f2{top:70%;left:5%;animation-delay:1s;}
-.f3{top:15%;right:5%;animation-delay:2s;}
-.f4{top:75%;right:5%;animation-delay:3s;}
-.f5{top:40%;left:2%;animation-delay:1.5s;}
-.f6{top:40%;right:2%;animation-delay:2.5s;}
-@keyframes floatAnim{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-25px) rotate(10deg)}
-}
-
-/* SCROLL INDICATOR */
-.scroll-indicator{
-  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
-  color:rgba(255,255,255,0.7);font-size:13px;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  animation:bounce2 2s infinite;
-}
-@keyframes bounce2{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
+.f2{top:70%;left:3%;animation-delay:2s;}
+.f3{top:20%;right:5%;animation-delay:4s;}
+.f4{top:75%;right:3%;animation-delay:1s;}
+.f5{top:45%;left:8%;animation-delay:3s;}
 
 /* STATS */
 .stats{
-  background:white;padding:50px 40px;
-  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+  background:white;padding:40px 20px;
+  display:flex;justify-content:center;
+  flex-wrap:wrap;gap:20px;
+  box-shadow:0 -5px 30px rgba(0,0,0,0.1);
 }
 .stat{
-  text-align:center;padding:20px 50px;
-  border-right:1px solid #f0f0f0;
+  text-align:center;padding:20px 30px;
+  border-radius:20px;background:#f8fff8;
+  min-width:140px;
+  border-bottom:4px solid #2ecc71;
 }
-.stat:last-child{border-right:none;}
-.stat-num{
-  font-size:48px;font-weight:900;
-  background:linear-gradient(135deg,#0f4c1e,#2ecc71);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+.stat-num{font-size:36px;font-weight:900;color:#1a5c30;}
+.stat-label{font-size:13px;color:#666;margin-top:5px;}
+
+/* CAMERA FEATURE HIGHLIGHT */
+.camera-highlight{
+  background:linear-gradient(135deg,#1a5c30,#2ecc71);
+  padding:80px 20px;text-align:center;
 }
-.stat-label{font-size:14px;color:#666;margin-top:5px;}
+.camera-highlight h2{
+  font-size:clamp(28px,5vw,42px);font-weight:900;
+  color:white;margin-bottom:15px;
+}
+.camera-highlight p{color:rgba(255,255,255,0.9);font-size:18px;margin-bottom:40px;}
+.camera-demo{
+  background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);
+  border-radius:30px;padding:40px;max-width:500px;
+  margin:0 auto;border:2px solid rgba(255,255,255,0.2);
+}
+.camera-icon-big{font-size:80px;margin-bottom:20px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.camera-steps{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:30px;}
+.cam-step{color:white;text-align:center;flex:1;min-width:100px;}
+.cam-step-num{
+  background:rgba(255,255,255,0.2);
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:18px;color:white;
+  margin:0 auto 10px;
+}
+.cam-step p{font-size:13px;opacity:0.9;}
 
 /* FEATURES */
-.features{
-  padding:100px 40px;
-  background:linear-gradient(180deg,#f0fff4 0%,#e8f5e9 100%);
-  text-align:center;
-}
-.section-badge{
-  display:inline-block;background:linear-gradient(135deg,#a8ff78,#78ffd6);
-  color:#0f4c1e;padding:8px 20px;border-radius:50px;
-  font-size:13px;font-weight:700;margin-bottom:15px;
-}
-.features h2{font-size:48px;font-weight:900;color:#0f4c1e;margin-bottom:15px;}
-.features p{color:#666;font-size:18px;margin-bottom:60px;}
+.features{padding:80px 20px;background:#f8fff8;text-align:center;}
+.features h2{font-size:clamp(28px,5vw,42px);font-weight:900;color:#1a5c30;margin-bottom:10px;}
+.features-sub{color:#666;font-size:17px;margin-bottom:50px;}
 .features-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;max-width:1200px;margin:0 auto;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;max-width:1100px;margin:0 auto;
 }
 .feat-card{
-  background:white;padding:45px 35px;border-radius:25px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.06);
-  transition:all 0.4s;position:relative;overflow:hidden;
-  border:1px solid rgba(46,204,113,0.1);
+  background:white;padding:35px 25px;
+  border-radius:25px;text-align:center;
+  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+  transition:all 0.3s;border-top:4px solid #2ecc71;
 }
-.feat-card::before{
-  content:'';position:absolute;top:0;left:0;
-  width:100%;height:4px;
-  background:linear-gradient(135deg,#a8ff78,#2ecc71);
-}
-.feat-card:hover{
-  transform:translateY(-15px);
-  box-shadow:0 30px 60px rgba(46,204,113,0.15);
-}
-.feat-icon{
-  width:70px;height:70px;border-radius:20px;
-  background:linear-gradient(135deg,#f0fff4,#e8f5e9);
-  display:flex;align-items:center;justify-content:center;
-  font-size:35px;margin:0 auto 20px;
-}
-.feat-card h3{font-size:20px;font-weight:800;color:#0f4c1e;margin-bottom:10px;}
-.feat-card p{color:#666;font-size:14px;line-height:1.7;}
+.feat-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,0.12);}
+.feat-icon{font-size:48px;margin-bottom:15px;}
+.feat-card h3{font-size:18px;font-weight:800;color:#1a5c30;margin-bottom:10px;}
+.feat-card p{color:#666;font-size:14px;line-height:1.6;}
 
 /* HOW IT WORKS */
-.how{
-  padding:100px 40px;
-  background:linear-gradient(135deg,#0f4c1e 0%,#1a7a3c 50%,#16a085 100%);
-  text-align:center;
+.how{padding:80px 20px;background:white;text-align:center;}
+.how h2{font-size:clamp(28px,5vw,42px);font-weight:900;color:#1a5c30;margin-bottom:50px;}
+.how-grid{
+  display:flex;gap:0;justify-content:center;
+  flex-wrap:wrap;max-width:900px;margin:0 auto;
 }
-.how h2{font-size:48px;font-weight:900;color:white;margin-bottom:60px;}
-.steps{display:flex;gap:0;justify-content:center;flex-wrap:wrap;position:relative;}
-.step{
-  background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);
-  padding:45px 35px;border-radius:25px;width:230px;
-  border:1px solid rgba(255,255,255,0.2);color:white;
-  position:relative;margin:15px;
+.how-step{
+  flex:1;min-width:180px;padding:30px 20px;
+  position:relative;text-align:center;
 }
-.step-num{
+.how-step::after{
+  content:'→';position:absolute;right:-10px;top:35px;
+  font-size:24px;color:#2ecc71;font-weight:900;
+}
+.how-step:last-child::after{display:none;}
+.how-num{
   width:60px;height:60px;border-radius:50%;
-  background:linear-gradient(135deg,#a8ff78,#78ffd6);
-  color:#0f4c1e;font-size:24px;font-weight:900;
+  background:linear-gradient(135deg,#1a5c30,#2ecc71);
+  color:white;font-size:24px;font-weight:900;
   display:flex;align-items:center;justify-content:center;
-  margin:0 auto 20px;
+  margin:0 auto 15px;box-shadow:0 8px 20px rgba(46,204,113,0.4);
 }
-.step h3{font-size:18px;font-weight:700;margin-bottom:10px;}
-.step p{font-size:13px;opacity:0.85;line-height:1.6;}
-
-/* NEW FEATURES SECTION */
-.new-features{
-  padding:100px 40px;background:white;text-align:center;
-}
-.new-features h2{font-size:48px;font-weight:900;color:#0f4c1e;margin-bottom:60px;}
-.nf-grid{
-  display:flex;gap:30px;justify-content:center;flex-wrap:wrap;
-  max-width:1100px;margin:0 auto;
-}
-.nf-card{
-  background:linear-gradient(135deg,#0f4c1e,#1a7a3c);
-  padding:45px 35px;border-radius:25px;width:300px;
-  color:white;text-align:center;transition:all 0.3s;
-  box-shadow:0 15px 40px rgba(15,76,30,0.3);
-}
-.nf-card:hover{transform:translateY(-10px);}
-.nf-icon{font-size:55px;margin-bottom:20px;}
-.nf-card h3{font-size:20px;font-weight:800;margin-bottom:12px;}
-.nf-card p{font-size:14px;opacity:0.85;line-height:1.6;}
-.nf-badge{
-  display:inline-block;background:rgba(168,255,120,0.2);
-  color:#a8ff78;padding:5px 15px;border-radius:50px;
-  font-size:11px;font-weight:700;margin-top:15px;
-  border:1px solid rgba(168,255,120,0.3);
-}
+.how-step h3{font-size:16px;font-weight:700;color:#1a5c30;margin-bottom:8px;}
+.how-step p{font-size:13px;color:#666;}
 
 /* CTA */
 .cta{
-  padding:100px 40px;
-  background:linear-gradient(135deg,#667eea,#764ba2,#f64f59,#c471ed);
-  background-size:400% 400%;
-  animation:gradientShift 6s ease infinite;
+  padding:80px 20px;
+  background:linear-gradient(135deg,#0a2e14,#1a5c30);
   text-align:center;
 }
-.cta h2{font-size:52px;font-weight:900;color:white;margin-bottom:20px;}
-.cta p{color:rgba(255,255,255,0.9);font-size:20px;margin-bottom:40px;}
+.cta h2{font-size:clamp(28px,5vw,42px);font-weight:900;color:white;margin-bottom:15px;}
+.cta p{color:rgba(255,255,255,0.8);font-size:18px;margin-bottom:40px;}
 .cta-btn{
-  background:white;color:#764ba2;
-  padding:22px 60px;border-radius:50px;
-  font-size:20px;font-weight:800;text-decoration:none;
-  box-shadow:0 15px 50px rgba(0,0,0,0.2);
-  transition:all 0.3s;display:inline-block;
+  background:linear-gradient(135deg,#2ecc71,#a8ff78);
+  color:#0a2e14;padding:20px 60px;border-radius:50px;
+  font-size:20px;font-weight:900;text-decoration:none;
+  display:inline-block;transition:all 0.3s;
+  box-shadow:0 15px 40px rgba(46,204,113,0.4);
 }
-.cta-btn:hover{transform:translateY(-5px);box-shadow:0 25px 70px rgba(0,0,0,0.3);}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 25px 50px rgba(46,204,113,0.5);}
 
 /* FOOTER */
 footer{
-  background:#0a2e12;color:white;
-  text-align:center;padding:40px;
+  background:#0a2e14;color:white;
+  text-align:center;padding:30px 20px;
 }
 footer p{opacity:0.6;font-size:14px;}
 
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+/* ANIMATIONS */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatAnim{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-25px) rotate(10deg)}}
 
 /* MOBILE */
-@media(max-width:768px){
-  .hero h1{font-size:42px;}
-  .navbar{padding:15px 20px;}
-  .stat{padding:20px 25px;}
-  .stat-num{font-size:36px;}
-  .features h2,.how h2,.cta h2{font-size:32px;}
+@media(max-width:600px){
+  .hero-btns{flex-direction:column;align-items:center;}
+  .btn-white,.btn-outline{width:280px;text-align:center;}
+  .how-step::after{display:none;}
+  .stats{gap:10px;}
+  .stat{min-width:120px;padding:15px 20px;}
 }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
+<!-- NAV -->
+<nav>
   <div class="nav-logo">🌿 Plant<span>Cure</span> AI</div>
   <a href="/login" class="nav-btn">🚀 Get Started</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="floats">
-    <div class="float-item f1">🌿</div>
-    <div class="float-item f2">🍃</div>
-    <div class="float-item f3">🌱</div>
-    <div class="float-item f4">🍀</div>
-    <div class="float-item f5">🌾</div>
-    <div class="float-item f6">🌻</div>
-  </div>
-  <div class="circle circle1"></div>
-  <div class="circle circle2"></div>
-  <div class="circle circle3"></div>
+  <div class="float-leaf f1">🌿</div>
+  <div class="float-leaf f2">🍃</div>
+  <div class="float-leaf f3">🌱</div>
+  <div class="float-leaf f4">🍀</div>
+  <div class="float-leaf f5">🌾</div>
 
-  <div class="hero-badge">🤖 AI Powered • 38+ Diseases • 95% Accuracy</div>
-  <h1>Detect Plant<br><span class="line2">Diseases Instantly</span></h1>
-  <p>Upload a leaf photo or use live camera. Get AI-powered disease diagnosis with complete 7-point treatment solution in 3 seconds!</p>
+  <div class="hero-badge">🤖 AI Powered • Free Forever • 38+ Diseases</div>
+  <h1>Detect Plant<br><span>Diseases Instantly</span></h1>
+  <p>Take a photo of your plant leaf and get instant AI diagnosis with complete treatment solutions in seconds!</p>
   <div class="hero-btns">
-    <a href="/login" class="btn-main">📸 Scan Your Plant</a>
+    <a href="/login" class="btn-white">📸 Scan Leaf Now</a>
     <a href="#features" class="btn-outline">Learn More ↓</a>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scroll to explore</span>
-    <span>↓</span>
   </div>
 </section>
 
@@ -317,44 +251,67 @@ footer p{opacity:0.6;font-size:14px;}
   <div class="stat"><div class="stat-num">38+</div><div class="stat-label">Diseases Detected</div></div>
   <div class="stat"><div class="stat-num">95%</div><div class="stat-label">AI Accuracy</div></div>
   <div class="stat"><div class="stat-num">3s</div><div class="stat-label">Analysis Time</div></div>
-  <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Forever</div></div>
+  <div class="stat"><div class="stat-num">FREE</div><div class="stat-label">Forever</div></div>
 </div>
+
+<!-- CAMERA HIGHLIGHT -->
+<section class="camera-highlight">
+  <h2>📷 Live Camera Analysis</h2>
+  <p>Open camera directly in the app - No need to save photos!</p>
+  <div class="camera-demo">
+    <div class="camera-icon-big">📸</div>
+    <p style="color:white;font-size:16px;opacity:0.9;">Point your camera at any plant leaf and get instant disease detection!</p>
+    <div class="camera-steps">
+      <div class="cam-step">
+        <div class="cam-step-num">1</div>
+        <p>Open Camera</p>
+      </div>
+      <div class="cam-step">
+        <div class="cam-step-num">2</div>
+        <p>Point at Leaf</p>
+      </div>
+      <div class="cam-step">
+        <div class="cam-step-num">3</div>
+        <p>Get Results</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FEATURES -->
 <section class="features" id="features">
-  <div class="section-badge">✨ Why PlantCure AI?</div>
-  <h2>Everything You Need</h2>
-  <p>Complete plant health management in one app</p>
+  <h2>🌟 Why PlantCure AI?</h2>
+  <p class="features-sub">Everything farmers need in one app</p>
   <div class="features-grid">
-    <div class="feat-card">
-      <div class="feat-icon">🔬</div>
-      <h3>Instant AI Analysis</h3>
-      <p>Advanced deep learning model trained on 50,000+ plant images gives results in 3 seconds</p>
-    </div>
     <div class="feat-card">
       <div class="feat-icon">📷</div>
       <h3>Live Camera</h3>
-      <p>Point your camera at any leaf and get instant real-time disease detection without uploading</p>
+      <p>Open camera directly - take photo and analyze instantly without saving!</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔬</div>
+      <h3>Instant AI Analysis</h3>
+      <p>Get disease diagnosis in 3 seconds with 95% accuracy!</p>
     </div>
     <div class="feat-card">
       <div class="feat-icon">💊</div>
       <h3>7-Point Solution</h3>
-      <p>Complete treatment plan with fertilizer recommendations and organic alternatives</p>
+      <p>Complete treatment plan with fertilizer and organic alternatives!</p>
     </div>
     <div class="feat-card">
-      <div class="feat-icon">📊</div>
-      <h3>Analysis History</h3>
-      <p>Track all your plant analyses, monitor disease progression and treatment results</p>
-    </div>
-    <div class="feat-card">
-      <div class="feat-icon">📍</div>
-      <h3>Nearby Agri Shops</h3>
-      <p>Find nearest agricultural shops to buy recommended fertilizers and pesticides</p>
+      <div class="feat-icon">📱</div>
+      <h3>Works on Mobile</h3>
+      <p>Install as app on Android & iPhone - No Play Store needed!</p>
     </div>
     <div class="feat-card">
       <div class="feat-icon">🌾</div>
       <h3>38+ Diseases</h3>
-      <p>Covers Tomato, Potato, Corn, Apple, Grape and 10+ more plant varieties</p>
+      <p>Tomato, Potato, Corn, Apple, Grape and 10+ more plants!</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🆓</div>
+      <h3>100% Free</h3>
+      <p>No subscription, no hidden fees - Free forever for all farmers!</p>
     </div>
   </div>
 </section>
@@ -362,51 +319,26 @@ footer p{opacity:0.6;font-size:14px;}
 <!-- HOW IT WORKS -->
 <section class="how">
   <h2>🔄 How It Works</h2>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-num">1</div>
       <h3>Login</h3>
-      <p>Sign in with Google account in one click</p>
+      <p>Sign in with Google account</p>
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Scan / Upload</h3>
-      <p>Use live camera or upload leaf photo</p>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <h3>Open Camera</h3>
+      <p>Click camera button in app</p>
     </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>AI Analyzes</h3>
-      <p>Deep learning model detects disease instantly</p>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <h3>Capture Leaf</h3>
+      <p>Take photo of affected leaf</p>
     </div>
-    <div class="step">
-      <div class="step-num">4</div>
+    <div class="how-step">
+      <div class="how-num">4</div>
       <h3>Get Solution</h3>
-      <p>Receive 7-point complete treatment plan</p>
-    </div>
-  </div>
-</section>
-
-<!-- NEW FEATURES -->
-<section class="new-features">
-  <h2>🆕 Powerful New Features</h2>
-  <div class="nf-grid">
-    <div class="nf-card">
-      <div class="nf-icon">📷</div>
-      <h3>Live Camera Scan</h3>
-      <p>Open camera directly in the app. Point at leaf and analyze without taking a photo separately</p>
-      <div class="nf-badge">NEW FEATURE</div>
-    </div>
-    <div class="nf-card">
-      <div class="nf-icon">📊</div>
-      <h3>History & Reports</h3>
-      <p>Save all analysis results. Track which plants were treated and monitor recovery progress</p>
-      <div class="nf-badge">NEW FEATURE</div>
-    </div>
-    <div class="nf-card">
-      <div class="nf-icon">📍</div>
-      <h3>Find Agri Shops</h3>
-      <p>Locate nearest agricultural shops on map to purchase recommended fertilizers instantly</p>
-      <div class="nf-badge">NEW FEATURE</div>
+      <p>Instant 7-point treatment plan</p>
     </div>
   </div>
 </section>
@@ -415,11 +347,11 @@ footer p{opacity:0.6;font-size:14px;}
 <section class="cta">
   <h2>Save Your Plants Today! 🌱</h2>
   <p>Join thousands of farmers using PlantCure AI</p>
-  <a href="/login" class="cta-btn">🚀 Start For Free!</a>
+  <a href="/login" class="cta-btn">🚀 Start Free Now</a>
 </section>
 
 <footer>
-  <p>🌿 PlantCure AI © 2024 | Saving Plants with Artificial Intelligence | Made with ❤️ for Farmers</p>
+  <p>🌿 PlantCure AI © 2024 | Powered by Artificial Intelligence | Made with ❤️ for Farmers</p>
 </footer>
 
 <script>
