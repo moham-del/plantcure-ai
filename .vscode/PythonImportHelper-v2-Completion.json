@@ -181,6 +181,15 @@
         "documentation": {}
     },
     {
+        "label": "download_model",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def download_model():\n    os.makedirs('model', exist_ok=True)\n    if not os.path.exists('model/plantcure_model.h5'):\n        print(\"📥 Downloading model from Google Drive...\")\n        try:\n            import requests\n            def download_file(file_id, dest):\n                session = requests.Session()\n                url = \"https://drive.google.com/uc?export=download\"\n                response = session.get(url, params={'id': file_id}, stream=True)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
         "label": "get_solution",
         "kind": 2,
         "importPath": "app",
@@ -194,7 +203,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def predict_disease(image_path):\n    # Real model prediction\n    if model is not None:\n        try:\n            img = Image.open(image_path).convert('RGB').resize((224, 224))\n            img_array = np.array(img) / 255.0\n            img_array = np.expand_dims(img_array, axis=0)\n            predictions = model.predict(img_array)\n            predicted_index = np.argmax(predictions[0])\n            confidence = float(predictions[0][predicted_index]) * 100",
+        "peekOfCode": "def predict_disease(image_path):\n    if model is not None:\n        try:\n            img = Image.open(image_path).convert('RGB').resize((224, 224))\n            img_array = np.array(img) / 255.0\n            img_array = np.expand_dims(img_array, axis=0)\n            predictions = model.predict(img_array)\n            predicted_index = np.argmax(predictions[0])\n            confidence = float(predictions[0][predicted_index]) * 100\n            class_name = class_names[predicted_index]",
         "detail": "app",
         "documentation": {}
     },
@@ -257,7 +266,16 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def sw():\n    return send_from_directory('static', 'sw.js',\n    mimetype='application/javascript')\n@app.route('/logout')\ndef logout():\n    session.clear()\n    return redirect(url_for('home'))\nif __name__ == '__main__':\n    port = int(os.environ.get('PORT', 5000))\n    app.run(host='0.0.0.0', port=port, debug=False)",
+        "peekOfCode": "def sw():\n    return send_from_directory('static', 'sw.js',\n    mimetype='application/javascript')\n@app.route('/sitemap.xml')\ndef sitemap():\n    return send_from_directory('static', 'sitemap.xml')\n@app.route('/logout')\ndef logout():\n    session.clear()\n    return redirect(url_for('home'))",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "sitemap",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def sitemap():\n    return send_from_directory('static', 'sitemap.xml')\n@app.route('/logout')\ndef logout():\n    session.clear()\n    return redirect(url_for('home'))\nif __name__ == '__main__':\n    port = int(os.environ.get('PORT', 5000))\n    app.run(host='0.0.0.0', port=port, debug=False)",
         "detail": "app",
         "documentation": {}
     },
@@ -275,7 +293,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\napp.secret_key = 'plantcure_secret_key_2024'\nUPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:",
+        "peekOfCode": "app = Flask(__name__)\napp.secret_key = 'plantcure_secret_key_2024'\nUPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\nMODEL_FILE_ID = \"123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF\"\nCLASS_FILE_ID = \"1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP\"\ndef download_model():\n    os.makedirs('model', exist_ok=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -284,7 +302,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app.secret_key = 'plantcure_secret_key_2024'\nUPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:\n    import tensorflow as tf",
+        "peekOfCode": "app.secret_key = 'plantcure_secret_key_2024'\nUPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\nMODEL_FILE_ID = \"123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF\"\nCLASS_FILE_ID = \"1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP\"\ndef download_model():\n    os.makedirs('model', exist_ok=True)\n    if not os.path.exists('model/plantcure_model.h5'):",
         "detail": "app",
         "documentation": {}
     },
@@ -293,7 +311,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "UPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):",
+        "peekOfCode": "UPLOAD_FOLDER = 'uploads'\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\nMODEL_FILE_ID = \"123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF\"\nCLASS_FILE_ID = \"1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP\"\ndef download_model():\n    os.makedirs('model', exist_ok=True)\n    if not os.path.exists('model/plantcure_model.h5'):\n        print(\"📥 Downloading model from Google Drive...\")",
         "detail": "app",
         "documentation": {}
     },
@@ -302,7 +320,25 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\n# Load Model safely\nmodel = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        model = tf.keras.models.load_model('model/plantcure_model.h5')",
+        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\nos.makedirs('model', exist_ok=True)\nMODEL_FILE_ID = \"123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF\"\nCLASS_FILE_ID = \"1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP\"\ndef download_model():\n    os.makedirs('model', exist_ok=True)\n    if not os.path.exists('model/plantcure_model.h5'):\n        print(\"📥 Downloading model from Google Drive...\")\n        try:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "MODEL_FILE_ID",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "MODEL_FILE_ID = \"123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF\"\nCLASS_FILE_ID = \"1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP\"\ndef download_model():\n    os.makedirs('model', exist_ok=True)\n    if not os.path.exists('model/plantcure_model.h5'):\n        print(\"📥 Downloading model from Google Drive...\")\n        try:\n            import requests\n            def download_file(file_id, dest):\n                session = requests.Session()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "CLASS_FILE_ID",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "CLASS_FILE_ID = \"1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP\"\ndef download_model():\n    os.makedirs('model', exist_ok=True)\n    if not os.path.exists('model/plantcure_model.h5'):\n        print(\"📥 Downloading model from Google Drive...\")\n        try:\n            import requests\n            def download_file(file_id, dest):\n                session = requests.Session()\n                url = \"https://drive.google.com/uc?export=download\"",
         "detail": "app",
         "documentation": {}
     },
@@ -311,7 +347,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "model = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        model = tf.keras.models.load_model('model/plantcure_model.h5')\n        with open('model/class_names.json', 'r') as f:\n            class_names = json.load(f)\n        print(\"✅ Model Loaded!\")\n    else:",
+        "peekOfCode": "model = None\nclass_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        print(\"🌿 Loading AI Model...\")\n        model = tf.keras.models.load_model('model/plantcure_model.h5')\n        with open('model/class_names.json', 'r') as f:\n            class_names = json.load(f)\n        print(\"✅ Real AI Model Loaded!\")",
         "detail": "app",
         "documentation": {}
     },
@@ -320,7 +356,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "class_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        model = tf.keras.models.load_model('model/plantcure_model.h5')\n        with open('model/class_names.json', 'r') as f:\n            class_names = json.load(f)\n        print(\"✅ Model Loaded!\")\n    else:\n        print(\"⚠️ Model not found - Running in Demo mode\")",
+        "peekOfCode": "class_names = []\ntry:\n    import tensorflow as tf\n    if os.path.exists('model/plantcure_model.h5'):\n        print(\"🌿 Loading AI Model...\")\n        model = tf.keras.models.load_model('model/plantcure_model.h5')\n        with open('model/class_names.json', 'r') as f:\n            class_names = json.load(f)\n        print(\"✅ Real AI Model Loaded!\")\n    else:",
         "detail": "app",
         "documentation": {}
     },

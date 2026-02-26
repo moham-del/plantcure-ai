@@ -247,7 +247,9 @@ def analyze():
 def sw():
     return send_from_directory('static', 'sw.js',
     mimetype='application/javascript')
-
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
 @app.route('/logout')
 def logout():
     session.clear()

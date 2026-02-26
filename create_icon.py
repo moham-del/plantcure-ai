@@ -28,4 +28,3 @@ def create_icon(size):
 create_icon(192)
 create_icon(512)
 print('🎉 All icons ready!')
-
