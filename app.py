@@ -18,30 +18,67 @@ os.makedirs('model', exist_ok=True)
 MODEL_FILE_ID = "1HhjnGOVQ767Q6iASsYMnkWl4AYkmaSfZ"
 CLASS_FILE_ID = "1uSTrCdRkVQlrsvdgBO1dOTl-iAUwHHbW"
 
+# =======================================
+# Download Model Function
+# =======================================
 def download_model():
+    os.makedirs('model', exist_ok=True)
+
     if not os.path.exists('model/plantcure_model.h5'):
         print("📥 Downloading model from Google Drive...")
         try:
             import gdown
-            url = f"https://drive.google.com/uc?id={MODEL_FILE_ID}"
-            gdown.download(url, 'model/plantcure_model.h5', quiet=False)
+            gdown.download(
+                id=MODEL_FILE_ID,
+                output='model/plantcure_model.h5',
+                quiet=False,
+                fuzzy=True
+            )
             print("✅ Model downloaded!")
         except Exception as e:
-            print(f"❌ Model download failed: {e}")
+            print(f"❌ gdown failed: {e}")
+            try:
+                import requests
+                print("📥 Trying requests method...")
+                url = f"https://drive.google.com/uc?export=download&id={MODEL_FILE_ID}&confirm=t"
+                session_r = requests.Session()
+                response = session_r.get(url, stream=True)
+                with open('model/plantcure_model.h5', 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=32768):
+                        if chunk:
+                            f.write(chunk)
+                print("✅ Model downloaded via requests!")
+            except Exception as e2:
+                print(f"❌ All download methods failed: {e2}")
 
     if not os.path.exists('model/class_names.json'):
         print("📥 Downloading class names...")
         try:
             import gdown
-            url = f"https://drive.google.com/uc?id={CLASS_FILE_ID}"
-            gdown.download(url, 'model/class_names.json', quiet=False)
+            gdown.download(
+                id=CLASS_FILE_ID,
+                output='model/class_names.json',
+                quiet=False,
+                fuzzy=True
+            )
             print("✅ Class names downloaded!")
         except Exception as e:
-            print(f"❌ Class names download failed: {e}")
+            print(f"❌ gdown failed: {e}")
+            try:
+                import requests
+                url = f"https://drive.google.com/uc?export=download&id={CLASS_FILE_ID}&confirm=t"
+                response = requests.get(url)
+                with open('model/class_names.json', 'wb') as f:
+                    f.write(response.content)
+                print("✅ Class names downloaded via requests!")
+            except Exception as e2:
+                print(f"❌ All download methods failed: {e2}")
 
 download_model()
 
+# =======================================
 # Load Model
+# =======================================
 model = None
 class_names = []
 
@@ -53,6 +90,7 @@ try:
         with open('model/class_names.json', 'r') as f:
             class_names = json.load(f)
         print("✅ Real AI Model Loaded!")
+        print(f"✅ Classes: {len(class_names)}")
     else:
         print("⚠️ Model not found - Demo mode active")
 except Exception as e:
@@ -305,14 +343,11 @@ disease_solutions = {
 }
 
 def get_solution(class_name):
-    # Exact match
     if class_name in disease_solutions:
         return disease_solutions[class_name]
-    # Partial match
     for key in disease_solutions:
         if key.lower() in class_name.lower() or class_name.lower() in key.lower():
             return disease_solutions[key]
-    # Default
     return {
         "disease": class_name.replace('_', ' '),
         "severity": "Medium",
@@ -337,11 +372,9 @@ def predict_disease(image_path):
             img = img.resize((224, 224), Image.LANCZOS)
             img_array = np.array(img, dtype=np.float32) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
-
             predictions = model.predict(img_array, verbose=0)
             predicted_index = np.argmax(predictions[0])
             confidence = float(predictions[0][predicted_index]) * 100
-
             if confidence < 50:
                 return "uncertain", round(confidence, 2), {
                     "disease": "Unclear Image - Please Retake Photo",
@@ -359,15 +392,12 @@ def predict_disease(image_path):
                     "organic": "Please retake photo for accurate recommendation",
                     "recovery_days": "Analysis incomplete - retake clear photo"
                 }
-
             class_name = class_names[predicted_index]
             solution = get_solution(class_name)
             return class_name, round(confidence, 2), solution
-
         except Exception as e:
             print(f"Prediction error: {e}")
 
-    # Demo mode
     import random
     demo_diseases = list(disease_solutions.keys())
     class_name = random.choice(demo_diseases)
