@@ -4,6 +4,7 @@ import numpy as np
 import json
 import os
 import uuid
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'plantcure_secret_key_2024'
@@ -19,85 +20,102 @@ MODEL_FILE_ID = "1HhjnGOVQ767Q6iASsYMnkWl4AYkmaSfZ"
 CLASS_FILE_ID = "1uSTrCdRkVQlrsvdgBO1dOTl-iAUwHHbW"
 
 # =======================================
-# Download Model Function
+# Download Large File from Google Drive
 # =======================================
+def download_large_file(file_id, dest):
+    URL = "https://drive.google.com/uc?export=download"
+    session_r = requests.Session()
+    response = session_r.get(URL, params={'id': file_id}, stream=True)
+
+    token = None
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            token = value
+            break
+
+    if token:
+        response = session_r.get(URL, params={'id': file_id, 'confirm': token}, stream=True)
+
+    with open(dest, 'wb') as f:
+        downloaded = 0
+        for chunk in response.iter_content(chunk_size=32768):
+            if chunk:
+                f.write(chunk)
+                downloaded += len(chunk)
+                if downloaded % (10 * 1024 * 1024) == 0:
+                    print(f"📥 Downloaded: {downloaded/1024/1024:.1f} MB")
+
+    size = os.path.getsize(dest)
+    print(f"✅ Download complete: {size/1024/1024:.2f} MB")
+    return size
+
 def download_model():
     os.makedirs('model', exist_ok=True)
 
-    if not os.path.exists('model/plantcure_model.h5'):
-        print("📥 Downloading model from Google Drive...")
+    # Download Model
+    model_path = 'model/plantcure_model.h5'
+    model_exists = os.path.exists(model_path)
+    model_size = os.path.getsize(model_path) if model_exists else 0
+
+    if not model_exists or model_size < 1000000:
+        print("📥 Downloading AI Model from Google Drive...")
         try:
-            import gdown
-            gdown.download(
-                id=MODEL_FILE_ID,
-                output='model/plantcure_model.h5',
-                quiet=False,
-                fuzzy=True
-            )
-            print("✅ Model downloaded!")
+            size = download_large_file(MODEL_FILE_ID, model_path)
+            if size < 1000000:
+                print("⚠️ Model file too small - trying gdown...")
+                raise Exception("File too small")
+            print("✅ Model downloaded successfully!")
         except Exception as e:
-            print(f"❌ gdown failed: {e}")
+            print(f"❌ requests failed: {e}")
             try:
-                import requests
-                print("📥 Trying requests method...")
-                url = f"https://drive.google.com/uc?export=download&id={MODEL_FILE_ID}&confirm=t"
-                session_r = requests.Session()
-                response = session_r.get(url, stream=True)
-                with open('model/plantcure_model.h5', 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=32768):
-                        if chunk:
-                            f.write(chunk)
-                print("✅ Model downloaded via requests!")
+                import gdown
+                gdown.download(
+                    f"https://drive.google.com/uc?id={MODEL_FILE_ID}",
+                    model_path,
+                    quiet=False,
+                    fuzzy=True
+                )
+                print("✅ Model downloaded via gdown!")
             except Exception as e2:
                 print(f"❌ All download methods failed: {e2}")
 
-    if not os.path.exists('model/class_names.json'):
+    # Download Class Names
+    class_path = 'model/class_names.json'
+    class_exists = os.path.exists(class_path)
+    class_size = os.path.getsize(class_path) if class_exists else 0
+
+    if not class_exists or class_size < 100:
         print("📥 Downloading class names...")
         try:
-            import gdown
-            gdown.download(
-                id=CLASS_FILE_ID,
-                output='model/class_names.json',
-                quiet=False,
-                fuzzy=True
-            )
+            size = download_large_file(CLASS_FILE_ID, class_path)
             print("✅ Class names downloaded!")
         except Exception as e:
-            print(f"❌ gdown failed: {e}")
-            try:
-                import requests
-                url = f"https://drive.google.com/uc?export=download&id={CLASS_FILE_ID}&confirm=t"
-                response = requests.get(url)
-                with open('model/class_names.json', 'wb') as f:
-                    f.write(response.content)
-                print("✅ Class names downloaded via requests!")
-            except Exception as e2:
-                print(f"❌ All download methods failed: {e2}")
+            print(f"❌ Failed: {e}")
 
 download_model()
 
 # =======================================
-# Load Model
+# Load AI Model
 # =======================================
 model = None
 class_names = []
 
 try:
     import tensorflow as tf
-    if os.path.exists('model/plantcure_model.h5'):
+    model_path = 'model/plantcure_model.h5'
+    if os.path.exists(model_path) and os.path.getsize(model_path) > 1000000:
         print("🌿 Loading AI Model...")
-        model = tf.keras.models.load_model('model/plantcure_model.h5')
+        model = tf.keras.models.load_model(model_path)
         with open('model/class_names.json', 'r') as f:
             class_names = json.load(f)
-        print("✅ Real AI Model Loaded!")
-        print(f"✅ Classes: {len(class_names)}")
+        print(f"✅ Real AI Model Loaded! Classes: {len(class_names)}")
     else:
-        print("⚠️ Model not found - Demo mode active")
+        print("⚠️ Model not found or too small - Demo mode active")
 except Exception as e:
     print(f"⚠️ Model error: {e}")
 
 # =======================================
-# Complete Disease Solutions Database
+# Disease Solutions Database
 # =======================================
 disease_solutions = {
     "Pepper__bell__Bacterial_spot": {
