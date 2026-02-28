@@ -15,8 +15,8 @@ os.makedirs('model', exist_ok=True)
 # =======================================
 # Google Drive File IDs
 # =======================================
-MODEL_FILE_ID = "123nNSDeNr1lrdjDBhwn9xsuuqZF8J2DF"
-CLASS_FILE_ID = "1xYh_YcLj6-y65hAa8Cnxm0zwAwK5nfQP"
+MODEL_FILE_ID = "1HhjnGOVQ767Q6iASsYMnkWl4AYkmaSfZ"
+CLASS_FILE_ID = "1uSTrCdRkVQlrsvdgBO1dOTl-iAUwHHbW"
 
 def download_model():
     if not os.path.exists('model/plantcure_model.h5'):
