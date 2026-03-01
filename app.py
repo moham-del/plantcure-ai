@@ -14,83 +14,45 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs('model', exist_ok=True)
 
 # =======================================
-# Google Drive File IDs
+# Hugging Face Model URLs
 # =======================================
-MODEL_FILE_ID = "1HhjnGOVQ767Q6iASsYMnkWl4AYkmaSfZ"
-CLASS_FILE_ID = "1uSTrCdRkVQlrsvdgBO1dOTl-iAUwHHbW"
+MODEL_URL = "https://huggingface.co/MSAYE/plantcure-ai/resolve/main/plantcure_model.h5"
+CLASS_URL = "https://huggingface.co/MSAYE/plantcure-ai/resolve/main/class_names.json"
 
 # =======================================
-# Download Large File from Google Drive
+# Download Model Function
 # =======================================
-def download_large_file(file_id, dest):
-    URL = "https://drive.google.com/uc?export=download"
-    session_r = requests.Session()
-    response = session_r.get(URL, params={'id': file_id}, stream=True)
-
-    token = None
-    for key, value in response.cookies.items():
-        if key.startswith('download_warning'):
-            token = value
-            break
-
-    if token:
-        response = session_r.get(URL, params={'id': file_id, 'confirm': token}, stream=True)
-
-    with open(dest, 'wb') as f:
-        downloaded = 0
-        for chunk in response.iter_content(chunk_size=32768):
-            if chunk:
-                f.write(chunk)
-                downloaded += len(chunk)
-                if downloaded % (10 * 1024 * 1024) == 0:
-                    print(f"📥 Downloaded: {downloaded/1024/1024:.1f} MB")
-
-    size = os.path.getsize(dest)
-    print(f"✅ Download complete: {size/1024/1024:.2f} MB")
-    return size
-
 def download_model():
     os.makedirs('model', exist_ok=True)
 
-    # Download Model
     model_path = 'model/plantcure_model.h5'
-    model_exists = os.path.exists(model_path)
-    model_size = os.path.getsize(model_path) if model_exists else 0
-
-    if not model_exists or model_size < 1000000:
-        print("📥 Downloading AI Model from Google Drive...")
+    if not os.path.exists(model_path) or os.path.getsize(model_path) < 1000000:
+        print("📥 Downloading model from Hugging Face...")
         try:
-            size = download_large_file(MODEL_FILE_ID, model_path)
-            if size < 1000000:
-                print("⚠️ Model file too small - trying gdown...")
-                raise Exception("File too small")
-            print("✅ Model downloaded successfully!")
+            response = requests.get(MODEL_URL, stream=True)
+            with open(model_path, 'wb') as f:
+                downloaded = 0
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        if downloaded % (10*1024*1024) == 0:
+                            print(f"📥 Downloaded: {downloaded/1024/1024:.0f} MB")
+            size = os.path.getsize(model_path)
+            print(f"✅ Model downloaded: {size/1024/1024:.2f} MB")
         except Exception as e:
-            print(f"❌ requests failed: {e}")
-            try:
-                import gdown
-                gdown.download(
-                    f"https://drive.google.com/uc?id={MODEL_FILE_ID}",
-                    model_path,
-                    quiet=False,
-                    fuzzy=True
-                )
-                print("✅ Model downloaded via gdown!")
-            except Exception as e2:
-                print(f"❌ All download methods failed: {e2}")
+            print(f"❌ Model download failed: {e}")
 
-    # Download Class Names
     class_path = 'model/class_names.json'
-    class_exists = os.path.exists(class_path)
-    class_size = os.path.getsize(class_path) if class_exists else 0
-
-    if not class_exists or class_size < 100:
+    if not os.path.exists(class_path) or os.path.getsize(class_path) < 100:
         print("📥 Downloading class names...")
         try:
-            size = download_large_file(CLASS_FILE_ID, class_path)
+            response = requests.get(CLASS_URL)
+            with open(class_path, 'wb') as f:
+                f.write(response.content)
             print("✅ Class names downloaded!")
         except Exception as e:
-            print(f"❌ Failed: {e}")
+            print(f"❌ Class names download failed: {e}")
 
 download_model()
 
@@ -110,7 +72,7 @@ try:
             class_names = json.load(f)
         print(f"✅ Real AI Model Loaded! Classes: {len(class_names)}")
     else:
-        print("⚠️ Model not found or too small - Demo mode active")
+        print("⚠️ Model not found - Demo mode active")
 except Exception as e:
     print(f"⚠️ Model error: {e}")
 
