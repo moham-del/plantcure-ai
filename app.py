@@ -345,7 +345,56 @@ def get_solution(class_name):
         "recovery_days": "14-21 days with proper treatment"
     }
 
+# =======================================
+# Leaf Validation Function
+# =======================================
+def is_leaf_image(image_path):
+    try:
+        img = Image.open(image_path).convert('RGB')
+        img_array = np.array(img)
+
+        r = img_array[:,:,0].astype(float)
+        g = img_array[:,:,1].astype(float)
+        b = img_array[:,:,2].astype(float)
+
+        green_mask = (g > r * 1.1) & (g > b * 1.1) & (g > 40)
+        yellow_mask = (r > 150) & (g > 150) & (b < 100)
+        brown_mask = (r > 100) & (g > 60) & (g < 130) & (b < 80)
+
+        leaf_pixels = np.sum(green_mask) + np.sum(yellow_mask) + np.sum(brown_mask)
+        total_pixels = img_array.shape[0] * img_array.shape[1]
+        leaf_ratio = leaf_pixels / total_pixels
+
+        print(f"🌿 Leaf ratio: {leaf_ratio:.2f}")
+        return leaf_ratio > 0.10
+
+    except Exception as e:
+        print(f"Validation error: {e}")
+        return True
+
+# =======================================
+# Predict Disease Function
+# =======================================
 def predict_disease(image_path):
+    # Leaf validation
+    if not is_leaf_image(image_path):
+        return "not_leaf", 0, {
+            "disease": "❌ Not a Leaf Image!",
+            "severity": "Invalid",
+            "cause": "Please upload a clear photo of a plant leaf only",
+            "symptoms": "The uploaded image does not appear to be a plant leaf",
+            "solutions": [
+                "📸 Take a clear photo of the affected leaf only",
+                "🌿 Make sure the leaf fills most of the frame",
+                "☀️ Use good natural lighting",
+                "🔍 Focus clearly on the leaf",
+                "❌ Do not upload people, animals or objects"
+            ],
+            "fertilizer": "Please upload a valid leaf image first",
+            "organic": "Please upload a valid leaf image first",
+            "recovery_days": "Upload correct leaf image to see recovery time"
+        }
+
     if model is not None and len(class_names) > 0:
         try:
             img = Image.open(image_path).convert('RGB')
@@ -355,26 +404,29 @@ def predict_disease(image_path):
             predictions = model.predict(img_array, verbose=0)
             predicted_index = np.argmax(predictions[0])
             confidence = float(predictions[0][predicted_index]) * 100
+
             if confidence < 50:
-                return "uncertain", round(confidence, 2), {
-                    "disease": "Unclear Image - Please Retake Photo",
+                return "unclear", round(confidence, 2), {
+                    "disease": "🔍 Unclear Image - Please Retake",
                     "severity": "Unknown",
                     "cause": "Image quality too low for accurate analysis",
                     "symptoms": "Could not detect clear disease symptoms",
                     "solutions": [
-                        "Take photo in bright natural daylight",
-                        "Make sure leaf fills the entire frame",
-                        "Focus clearly on the most affected area",
-                        "Avoid blurry or dark photos",
-                        "Try taking from 20-30cm distance"
+                        "☀️ Take photo in bright natural daylight",
+                        "🌿 Make sure leaf fills the entire frame",
+                        "🔍 Focus clearly on the affected area",
+                        "📱 Hold phone steady while clicking",
+                        "📏 Take photo from 20-30cm distance"
                     ],
                     "fertilizer": "Please retake photo for accurate recommendation",
                     "organic": "Please retake photo for accurate recommendation",
-                    "recovery_days": "Analysis incomplete - retake clear photo"
+                    "recovery_days": "Retake clear photo for analysis"
                 }
+
             class_name = class_names[predicted_index]
             solution = get_solution(class_name)
             return class_name, round(confidence, 2), solution
+
         except Exception as e:
             print(f"Prediction error: {e}")
 
