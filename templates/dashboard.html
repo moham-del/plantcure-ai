@@ -8,7 +8,6 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'Poppins',sans-serif; background:#f0fff4; }
 
-  /* NAVBAR */
   .navbar {
     background: linear-gradient(135deg, #0f4c1e, #1a7a3c);
     padding: 15px 40px; display:flex;
@@ -23,85 +22,124 @@
     background:rgba(255,255,255,0.2); color:white;
     padding:8px 20px; border-radius:50px;
     text-decoration:none; font-size:14px;
-    border:1px solid rgba(255,255,255,0.3);
-    transition:all 0.3s;
+    border:1px solid rgba(255,255,255,0.3); transition:all 0.3s;
   }
   .logout-btn:hover { background:white; color:#1a7a3c; }
 
-  /* HERO BANNER */
   .dash-hero {
     background: linear-gradient(135deg, #1a7a3c, #2ecc71);
-    padding: 50px 40px; text-align:center; color:white;
+    padding: 40px; text-align:center; color:white;
   }
-  .dash-hero h1 { font-size:42px; font-weight:800; margin-bottom:10px; }
+  .dash-hero h1 { font-size:36px; font-weight:800; margin-bottom:8px; }
   .dash-hero h1 span { color:#a8ff78; }
-  .dash-hero p { font-size:18px; opacity:0.9; }
+  .dash-hero p { font-size:16px; opacity:0.9; }
 
-  /* STATS ROW */
   .stats-row {
-    display:flex; gap:20px; padding:30px 40px;
+    display:flex; gap:20px; padding:25px 40px;
     justify-content:center; flex-wrap:wrap;
   }
   .stat-card {
-    background:white; padding:25px 35px;
+    background:white; padding:20px 30px;
     border-radius:20px; text-align:center;
     box-shadow:0 8px 25px rgba(0,0,0,0.08);
-    border-left:5px solid #2ecc71; min-width:160px;
+    border-left:5px solid #2ecc71; min-width:140px;
   }
-  .stat-card .num { font-size:36px; font-weight:800; color:#1a7a3c; }
-  .stat-card .label { font-size:13px; color:#666; margin-top:5px; }
+  .stat-card .num { font-size:32px; font-weight:800; color:#1a7a3c; }
+  .stat-card .label { font-size:12px; color:#666; margin-top:5px; }
 
-  /* UPLOAD SECTION */
-  .upload-section { padding:20px 40px 60px; max-width:900px; margin:0 auto; }
-  .upload-section h2 { font-size:28px; font-weight:800; color:#1a7a3c; margin-bottom:25px; text-align:center; }
+  .upload-section { padding:20px 40px 60px; max-width:1000px; margin:0 auto; }
+  .upload-section h2 { font-size:26px; font-weight:800; color:#1a7a3c; margin-bottom:20px; text-align:center; }
 
   .upload-box {
-    background:white; border-radius:25px;
-    padding:50px; text-align:center;
-    border:3px dashed #2ecc71;
+    background:white; border-radius:25px; padding:40px;
+    text-align:center; border:3px dashed #2ecc71;
     box-shadow:0 10px 30px rgba(0,0,0,0.08);
     transition:all 0.3s; cursor:pointer;
-    position:relative;
   }
-  .upload-box:hover { border-color:#1a7a3c; box-shadow:0 15px 40px rgba(46,204,113,0.2); transform:translateY(-3px); }
-  .upload-box.dragover { background:#f0fff4; border-color:#1a7a3c; }
-
-  .upload-icon { font-size:80px; margin-bottom:20px; animation:bounce 2s infinite; }
+  .upload-box:hover { border-color:#1a7a3c; transform:translateY(-3px); }
+  .upload-icon { font-size:70px; margin-bottom:15px; animation:bounce 2s infinite; }
   @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .upload-box h3 { font-size:22px; font-weight:700; color:#1a7a3c; margin-bottom:8px; }
+  .upload-box p { color:#666; margin-bottom:20px; font-size:14px; }
 
-  .upload-box h3 { font-size:24px; font-weight:700; color:#1a7a3c; margin-bottom:10px; }
-  .upload-box p { color:#666; margin-bottom:25px; font-size:15px; }
-
+  .btn-row { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
   .upload-btn {
     background:linear-gradient(135deg,#1a7a3c,#2ecc71);
-    color:white; padding:15px 40px; border-radius:50px;
-    font-size:16px; font-weight:700; border:none;
+    color:white; padding:14px 35px; border-radius:50px;
+    font-size:15px; font-weight:700; border:none;
     cursor:pointer; transition:all 0.3s;
     box-shadow:0 8px 25px rgba(46,204,113,0.3);
   }
-  .upload-btn:hover { transform:translateY(-2px); box-shadow:0 15px 35px rgba(46,204,113,0.4); }
+  .upload-btn:hover { transform:translateY(-2px); }
+  .camera-btn {
+    background:linear-gradient(135deg,#e74c3c,#c0392b) !important;
+    box-shadow:0 8px 25px rgba(231,76,60,0.3) !important;
+  }
+  #fileInput, #cameraInput { display:none; }
 
-  #fileInput { display:none; }
+  /* PREVIEW + RESULT LAYOUT */
+  .analysis-layout {
+    display:none;
+    gap:25px;
+    margin-top:25px;
+    align-items:flex-start;
+  }
 
-  /* PREVIEW */
-  .preview-container { margin-top:30px; display:none; }
+  /* Image Panel */
+  .image-panel {
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    flex:0 0 300px;
+    position:sticky;
+    top:20px;
+  }
+  .image-panel h3 {
+    color:#1a7a3c; font-size:16px;
+    font-weight:700; margin-bottom:15px;
+  }
   .preview-img {
-    width:250px; height:250px; object-fit:cover;
-    border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    width:100%; max-width:260px;
+    height:260px; object-fit:cover;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
     border:4px solid #2ecc71;
+  }
+  .img-badge {
+    margin-top:12px;
+    background:#f0fff4;
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:12px;
+    color:#1a7a3c;
+    font-weight:600;
   }
   .analyze-btn {
     background:linear-gradient(135deg,#ff6b35,#f7931e);
-    color:white; padding:18px 50px; border-radius:50px;
-    font-size:18px; font-weight:700; border:none;
-    cursor:pointer; margin-top:20px;
+    color:white; padding:14px 30px; border-radius:50px;
+    font-size:16px; font-weight:700; border:none;
+    cursor:pointer; margin-top:15px; width:100%;
     box-shadow:0 8px 25px rgba(255,107,53,0.3);
-    transition:all 0.3s; display:block; margin:20px auto 0;
+    transition:all 0.3s;
   }
-  .analyze-btn:hover { transform:translateY(-3px); }
+  .analyze-btn:hover { transform:translateY(-2px); }
+  .retake-btn {
+    background:transparent; color:#999;
+    border:1px solid #ddd; padding:10px 20px;
+    border-radius:50px; font-size:13px;
+    cursor:pointer; margin-top:10px;
+    width:100%; transition:all 0.3s;
+    font-family:'Poppins',sans-serif;
+  }
+  .retake-btn:hover { border-color:#e74c3c; color:#e74c3c; }
 
-  /* LOADING */
-  .loading { display:none; text-align:center; padding:40px; }
+  /* Result Panel */
+  .result-panel { flex:1; min-width:0; }
+
+  /* Loading */
+  .loading { display:none; text-align:center; padding:60px 40px; background:white; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08); }
   .spinner {
     width:60px; height:60px; border:5px solid #e0e0e0;
     border-top:5px solid #2ecc71; border-radius:50%;
@@ -110,113 +148,114 @@
   @keyframes spin { to{transform:rotate(360deg)} }
   .loading p { color:#1a7a3c; font-size:18px; font-weight:600; }
 
-  /* RESULT */
-  .result-container { display:none; margin-top:30px; }
+  /* Result Card */
+  .result-container { display:none; }
   .result-header {
     background:linear-gradient(135deg,#1a7a3c,#2ecc71);
-    color:white; padding:30px; border-radius:20px 20px 0 0;
-    text-align:center;
+    color:white; padding:25px 30px;
+    border-radius:20px 20px 0 0; text-align:center;
   }
-  .result-header h2 { font-size:28px; font-weight:800; margin-bottom:5px; }
-  .result-header p { opacity:0.9; font-size:16px; }
-  .confidence-bar-container { margin-top:15px; }
-  .confidence-label { font-size:14px; margin-bottom:8px; }
-  .confidence-bar {
-    background:rgba(255,255,255,0.3); border-radius:50px;
-    height:12px; overflow:hidden;
-  }
-  .confidence-fill {
-    background:white; height:100%; border-radius:50px;
-    transition:width 1s ease; width:0%;
-  }
+  .result-header h2 { font-size:24px; font-weight:800; margin-bottom:5px; }
+  .result-header p { opacity:0.9; font-size:14px; }
+  .confidence-bar-container { margin-top:12px; }
+  .confidence-label { font-size:13px; margin-bottom:6px; }
+  .confidence-bar { background:rgba(255,255,255,0.3); border-radius:50px; height:10px; overflow:hidden; }
+  .confidence-fill { background:white; height:100%; border-radius:50px; transition:width 1s ease; width:0%; }
 
-  /* 7 POINT ANALYSIS */
   .seven-points {
-    background:white; padding:30px;
+    background:white; padding:25px 30px;
     border-radius:0 0 20px 20px;
     box-shadow:0 10px 30px rgba(0,0,0,0.1);
   }
   .seven-points h3 {
-    font-size:20px; font-weight:800; color:#1a7a3c;
-    margin-bottom:20px; text-align:center;
-    padding-bottom:15px; border-bottom:2px solid #f0fff4;
+    font-size:18px; font-weight:800; color:#1a7a3c;
+    margin-bottom:18px; text-align:center;
+    padding-bottom:12px; border-bottom:2px solid #f0fff4;
   }
   .point-item {
-    display:flex; align-items:flex-start; gap:15px;
-    padding:15px; margin-bottom:12px;
-    border-radius:15px; transition:all 0.3s;
+    display:flex; align-items:flex-start; gap:12px;
+    padding:12px; margin-bottom:10px;
+    border-radius:12px; transition:all 0.3s;
     animation:slideIn 0.5s ease both;
   }
   .point-item:hover { background:#f0fff4; transform:translateX(5px); }
   @keyframes slideIn { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
-
   .point-num {
     background:linear-gradient(135deg,#1a7a3c,#2ecc71);
-    color:white; width:35px; height:35px;
+    color:white; width:32px; height:32px;
     border-radius:50%; display:flex;
     align-items:center; justify-content:center;
-    font-weight:800; font-size:14px; flex-shrink:0;
+    font-weight:800; font-size:13px; flex-shrink:0;
   }
   .point-content { flex:1; }
-  .point-title { font-weight:700; color:#1a7a3c; font-size:15px; margin-bottom:4px; }
-  .point-text { color:#555; font-size:14px; line-height:1.5; }
-
-  .severity-badge {
-    display:inline-block; padding:4px 15px;
-    border-radius:50px; font-size:12px; font-weight:700;
-  }
+  .point-title { font-weight:700; color:#1a7a3c; font-size:14px; margin-bottom:3px; }
+  .point-text { color:#555; font-size:13px; line-height:1.5; }
+  .severity-badge { display:inline-block; padding:3px 12px; border-radius:50px; font-size:11px; font-weight:700; }
   .severity-High { background:#ffe0e0; color:#cc0000; }
   .severity-Medium { background:#fff3cd; color:#856404; }
-  .severity-Low { background:#d4edda; color:#155724; }
+  .severity-Critical { background:#ffe0e0; color:#cc0000; }
   .severity-None { background:#d4edda; color:#155724; }
-
-  /* SOLUTIONS LIST */
+  .severity-Invalid { background:#f0f0f0; color:#666; }
   .solutions-list { list-style:none; }
   .solutions-list li {
-    padding:8px 0; color:#555; font-size:14px;
+    padding:6px 0; color:#555; font-size:13px;
     border-bottom:1px solid #f0f0f0;
     display:flex; align-items:center; gap:8px;
   }
   .solutions-list li::before { content:'✅'; }
-
-  /* NEW ANALYSIS BTN */
   .new-analysis-btn {
     background:linear-gradient(135deg,#1a7a3c,#2ecc71);
-    color:white; padding:15px 40px; border-radius:50px;
-    font-size:16px; font-weight:700; border:none;
-    cursor:pointer; margin:25px auto 0;
+    color:white; padding:14px 35px; border-radius:50px;
+    font-size:15px; font-weight:700; border:none;
+    cursor:pointer; margin:20px auto 0;
     display:block; transition:all 0.3s;
     box-shadow:0 8px 25px rgba(46,204,113,0.3);
   }
   .new-analysis-btn:hover { transform:translateY(-2px); }
 
-  /* TIPS */
-  .tips-section { padding:0 40px 60px; max-width:900px; margin:0 auto; }
+  /* Not leaf error */
+  .error-card {
+    background:white; border-radius:20px;
+    padding:40px; text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    border-top:5px solid #e74c3c;
+  }
+  .error-card .error-icon { font-size:60px; margin-bottom:15px; }
+  .error-card h3 { color:#e74c3c; font-size:20px; font-weight:800; margin-bottom:10px; }
+  .error-card p { color:#666; font-size:14px; margin-bottom:20px; }
+
+  /* Tips */
+  .tips-section { padding:0 40px 60px; max-width:1000px; margin:0 auto; }
   .tips-grid { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
   .tip-card {
-    background:white; padding:25px; border-radius:20px;
-    width:250px; box-shadow:0 8px 20px rgba(0,0,0,0.06);
+    background:white; padding:20px; border-radius:20px;
+    width:220px; box-shadow:0 8px 20px rgba(0,0,0,0.06);
     border-top:4px solid #2ecc71; text-align:center;
   }
-  .tip-icon { font-size:36px; margin-bottom:10px; }
-  .tip-card h4 { color:#1a7a3c; font-weight:700; margin-bottom:8px; }
-  .tip-card p { color:#666; font-size:13px; line-height:1.5; }
+  .tip-icon { font-size:32px; margin-bottom:8px; }
+  .tip-card h4 { color:#1a7a3c; font-weight:700; margin-bottom:6px; font-size:14px; }
+  .tip-card p { color:#666; font-size:12px; line-height:1.5; }
+
+  /* Mobile responsive */
+  @media(max-width:768px){
+    .navbar { padding:12px 20px; }
+    .dash-hero { padding:30px 20px; }
+    .dash-hero h1 { font-size:26px; }
+    .stats-row { padding:20px; gap:12px; }
+    .stat-card { min-width:120px; padding:15px 20px; }
+    .upload-section { padding:15px 20px 40px; }
+    .analysis-layout { flex-direction:column; }
+    .image-panel { flex:none; width:100%; position:static; }
+    .preview-img { height:220px; }
+    .tips-section { padding:0 20px 40px; }
+  }
 </style>
-<!-- PWA Setup -->
 <link rel="manifest" href="/static/manifest.json">
 <meta name="theme-color" content="#2ecc71">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="PlantCure AI">
-<link rel="apple-touch-icon" href="/static/images/icon-192.png">
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/static/sw.js');
-}
-</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/static/sw.js');}</script>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-logo">🌿 Plant<span>Cure</span> AI</div>
   <div class="nav-user">
@@ -225,231 +264,235 @@ if ('serviceWorker' in navigator) {
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="dash-hero">
   <h1>Hello, <span>{{ user }}!</span> 👋</h1>
   <p>Upload a leaf photo to detect diseases instantly with AI</p>
 </div>
 
-<!-- STATS -->
 <div class="stats-row">
-  <div class="stat-card"><div class="num">38+</div><div class="label">Diseases Detected</div></div>
-  <div class="stat-card"><div class="num">95%</div><div class="label">AI Accuracy</div></div>
-  <div class="stat-card"><div class="num">3s</div><div class="label">Analysis Time</div></div>
+  <div class="stat-card"><div class="num">38+</div><div class="label">Diseases</div></div>
+  <div class="stat-card"><div class="num">95%</div><div class="label">Accuracy</div></div>
+  <div class="stat-card"><div class="num">3s</div><div class="label">Analysis</div></div>
   <div class="stat-card"><div class="num">Free</div><div class="label">Forever</div></div>
 </div>
 
-<!-- UPLOAD -->
 <div class="upload-section">
   <h2>🔬 Analyze Your Plant Leaf</h2>
 
-<div class="upload-box" id="uploadBox">
-  <div class="upload-icon">🌿</div>
-  <h3>Analyze Your Plant Leaf</h3>
-  <p>Take a live photo or upload from gallery</p>
-  <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
-    <button class="upload-btn" style="background:linear-gradient(135deg,#e74c3c,#c0392b);"
-      onclick="openCamera()">
-      📷 Open Camera
-    </button>
-    <button class="upload-btn"
-      onclick="document.getElementById('fileInput').click()">
-      🖼️ Choose Photo
-    </button>
-  </div>
-  <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
-  <input type="file" id="cameraInput" accept="image/*" capture="environment"
-    onchange="previewImage(event)" style="display:none">
-</div>
-
-  <!-- PREVIEW -->
-  <div class="preview-container" id="previewContainer">
-    <img id="previewImg" class="preview-img" src="" alt="Leaf Preview">
-    <button class="analyze-btn" onclick="analyzeImage()">
-      🔬 Analyze Now!
-    </button>
-  </div>
-
-  <!-- LOADING -->
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-    <p>🤖 AI is analyzing your plant...</p>
-    <p style="color:#666;font-size:14px;margin-top:10px">This takes 2-3 seconds</p>
-  </div>
-
-  <!-- RESULT -->
-  <div class="result-container" id="resultContainer">
-    <div class="result-header">
-      <h2 id="diseaseName">Disease Name</h2>
-      <p id="diseaseCause">Cause</p>
-      <div class="confidence-bar-container">
-        <div class="confidence-label">AI Confidence: <span id="confidenceText">0%</span></div>
-        <div class="confidence-bar">
-          <div class="confidence-fill" id="confidenceFill"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="seven-points">
-      <h3>📋 7-Point Complete Analysis</h3>
-
-      <div class="point-item" style="animation-delay:0.1s">
-        <div class="point-num">1</div>
-        <div class="point-content">
-          <div class="point-title">🦠 Disease Detected</div>
-          <div class="point-text" id="p1">-</div>
-        </div>
-      </div>
-
-      <div class="point-item" style="animation-delay:0.2s">
-        <div class="point-num">2</div>
-        <div class="point-content">
-          <div class="point-title">⚠️ Severity Level</div>
-          <div class="point-text" id="p2">-</div>
-        </div>
-      </div>
-
-      <div class="point-item" style="animation-delay:0.3s">
-        <div class="point-num">3</div>
-        <div class="point-content">
-          <div class="point-title">🔍 Symptoms</div>
-          <div class="point-text" id="p3">-</div>
-        </div>
-      </div>
-
-      <div class="point-item" style="animation-delay:0.4s">
-        <div class="point-num">4</div>
-        <div class="point-content">
-          <div class="point-title">💊 Treatment Solutions</div>
-          <div class="point-text" id="p4">-</div>
-        </div>
-      </div>
-
-      <div class="point-item" style="animation-delay:0.5s">
-        <div class="point-num">5</div>
-        <div class="point-content">
-          <div class="point-title">🌱 Fertilizer Recommended</div>
-          <div class="point-text" id="p5">-</div>
-        </div>
-      </div>
-
-      <div class="point-item" style="animation-delay:0.6s">
-        <div class="point-num">6</div>
-        <div class="point-content">
-          <div class="point-title">🍃 Organic Alternative</div>
-          <div class="point-text" id="p6">-</div>
-        </div>
-      </div>
-
-      <div class="point-item" style="animation-delay:0.7s">
-        <div class="point-num">7</div>
-        <div class="point-content">
-          <div class="point-title">📅 Recovery Timeline</div>
-          <div class="point-text" id="p7">-</div>
-        </div>
-      </div>
-
-      <button class="new-analysis-btn" onclick="resetAnalysis()">
-        🔄 Analyze Another Leaf
+  <!-- Upload Box -->
+  <div class="upload-box" id="uploadBox">
+    <div class="upload-icon">🌿</div>
+    <h3>Upload Leaf Photo</h3>
+    <p>Take a live photo or choose from gallery<br><small style="color:#e74c3c">⚠️ Leaf photos only - other images will be rejected</small></p>
+    <div class="btn-row">
+      <button class="upload-btn camera-btn" onclick="document.getElementById('cameraInput').click()">
+        📷 Open Camera
+      </button>
+      <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+        🖼️ Choose Photo
       </button>
     </div>
+    <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+    <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="previewImage(event)">
+  </div>
+
+  <!-- Analysis Layout: Image + Result Side by Side -->
+  <div class="analysis-layout" id="analysisLayout">
+
+    <!-- Left: Image Panel -->
+    <div class="image-panel" id="imagePanel">
+      <h3>📸 Uploaded Leaf</h3>
+      <img id="previewImg" class="preview-img" src="" alt="Leaf">
+      <div class="img-badge" id="imgBadge">🌿 Ready to analyze</div>
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyzeImage()">
+        🔬 Analyze Now!
+      </button>
+      <button class="retake-btn" onclick="resetAnalysis()">
+        🔄 Choose Different Photo
+      </button>
+    </div>
+
+    <!-- Right: Result Panel -->
+    <div class="result-panel">
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>🤖 AI is analyzing your leaf...</p>
+        <p style="color:#666;font-size:13px;margin-top:8px">Takes 2-3 seconds</p>
+      </div>
+
+      <!-- Error Card (not leaf) -->
+      <div class="error-card" id="errorCard" style="display:none">
+        <div class="error-icon">❌</div>
+        <h3>Not a Leaf Image!</h3>
+        <p>Please upload a clear photo of a plant leaf only.<br>Animals, people or objects are not accepted.</p>
+        <button class="upload-btn" onclick="resetAnalysis()">📸 Try Again</button>
+      </div>
+
+      <!-- Result -->
+      <div class="result-container" id="resultContainer">
+        <div class="result-header">
+          <h2 id="diseaseName">Disease Name</h2>
+          <p id="diseaseCause">Cause</p>
+          <div class="confidence-bar-container">
+            <div class="confidence-label">AI Confidence: <span id="confidenceText">0%</span></div>
+            <div class="confidence-bar">
+              <div class="confidence-fill" id="confidenceFill"></div>
+            </div>
+          </div>
+        </div>
+        <div class="seven-points">
+          <h3>📋 7-Point Complete Analysis</h3>
+          <div class="point-item" style="animation-delay:0.1s">
+            <div class="point-num">1</div>
+            <div class="point-content">
+              <div class="point-title">🦠 Disease Detected</div>
+              <div class="point-text" id="p1">-</div>
+            </div>
+          </div>
+          <div class="point-item" style="animation-delay:0.2s">
+            <div class="point-num">2</div>
+            <div class="point-content">
+              <div class="point-title">⚠️ Severity Level</div>
+              <div class="point-text" id="p2">-</div>
+            </div>
+          </div>
+          <div class="point-item" style="animation-delay:0.3s">
+            <div class="point-num">3</div>
+            <div class="point-content">
+              <div class="point-title">🔍 Symptoms</div>
+              <div class="point-text" id="p3">-</div>
+            </div>
+          </div>
+          <div class="point-item" style="animation-delay:0.4s">
+            <div class="point-num">4</div>
+            <div class="point-content">
+              <div class="point-title">💊 Treatment Solutions</div>
+              <div class="point-text" id="p4">-</div>
+            </div>
+          </div>
+          <div class="point-item" style="animation-delay:0.5s">
+            <div class="point-num">5</div>
+            <div class="point-content">
+              <div class="point-title">🌱 Fertilizer</div>
+              <div class="point-text" id="p5">-</div>
+            </div>
+          </div>
+          <div class="point-item" style="animation-delay:0.6s">
+            <div class="point-num">6</div>
+            <div class="point-content">
+              <div class="point-title">🍃 Organic Alternative</div>
+              <div class="point-text" id="p6">-</div>
+            </div>
+          </div>
+          <div class="point-item" style="animation-delay:0.7s">
+            <div class="point-num">7</div>
+            <div class="point-content">
+              <div class="point-title">📅 Recovery Timeline</div>
+              <div class="point-text" id="p7">-</div>
+            </div>
+          </div>
+          <button class="new-analysis-btn" onclick="resetAnalysis()">
+            🔄 Analyze Another Leaf
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<!-- TIPS -->
 <div class="tips-section">
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">📸</div>
       <h4>Best Photo Tips</h4>
-      <p>Take photo in good lighting. Make sure leaf fills the frame clearly</p>
+      <p>Good lighting, leaf fills the frame clearly</p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🎯</div>
       <h4>Better Accuracy</h4>
-      <p>Focus on the most affected area of the leaf for best results</p>
+      <p>Focus on the most affected area</p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🌿</div>
       <h4>Supported Plants</h4>
-      <p>Tomato, Potato, Corn, Apple, Grape, Pepper and 10+ more plants</p>
+      <p>Tomato, Potato, Corn, Apple, Grape and more</p>
     </div>
   </div>
 </div>
 
 <script>
 let selectedFile = null;
-function openCamera() {
-  document.getElementById('cameraInput').click();
-}
 
 function previewImage(event) {
   const file = event.target.files[0];
   if (!file) return;
-  
   selectedFile = file;
-  
-  // Image preview show பண்ணு
+
   const reader = new FileReader();
   reader.onload = function(e) {
-    const previewImg = document.getElementById('previewImg');
-    previewImg.src = e.target.result;
-    previewImg.style.display = 'block';
-    
-    document.getElementById('previewContainer').style.display = 'flex';
-    document.getElementById('previewContainer').style.flexDirection = 'column';
-    document.getElementById('previewContainer').style.alignItems = 'center';
-    document.getElementById('resultContainer').style.display = 'none';
+    document.getElementById('previewImg').src = e.target.result;
     document.getElementById('uploadBox').style.display = 'none';
-    
-    console.log('✅ Image loaded successfully');
+    document.getElementById('analysisLayout').style.display = 'flex';
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('resultContainer').style.display = 'none';
+    document.getElementById('errorCard').style.display = 'none';
+    document.getElementById('analyzeBtn').style.display = 'block';
+    document.getElementById('imgBadge').textContent = '🌿 Ready to analyze';
+    document.getElementById('imgBadge').style.background = '#f0fff4';
+    document.getElementById('imgBadge').style.color = '#1a7a3c';
   };
   reader.readAsDataURL(file);
 }
 
 function analyzeImage() {
-  if (!selectedFile) {
-    alert('Please select an image first!');
-    return;
-  }
-  
-  document.getElementById('previewContainer').style.display = 'none';
+  if (!selectedFile) return;
+
+  document.getElementById('analyzeBtn').style.display = 'none';
   document.getElementById('loading').style.display = 'block';
   document.getElementById('resultContainer').style.display = 'none';
+  document.getElementById('errorCard').style.display = 'none';
+  document.getElementById('imgBadge').textContent = '🔬 Analyzing...';
+  document.getElementById('imgBadge').style.background = '#fff3cd';
+  document.getElementById('imgBadge').style.color = '#856404';
 
   const formData = new FormData();
   formData.append('file', selectedFile);
 
-  fetch('/analyze', {
-    method: 'POST',
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('loading').style.display = 'none';
-    if (data.error) {
-      alert('Error: ' + data.error);
+  fetch('/analyze', { method:'POST', body:formData })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('loading').style.display = 'none';
+      if (data.error) { alert(data.error); resetAnalysis(); return; }
+      if (data.class_name === 'not_leaf') {
+        document.getElementById('errorCard').style.display = 'block';
+        document.getElementById('imgBadge').textContent = '❌ Not a leaf!';
+        document.getElementById('imgBadge').style.background = '#ffe0e0';
+        document.getElementById('imgBadge').style.color = '#cc0000';
+      } else {
+        showResult(data);
+      }
+    })
+    .catch(err => {
+      document.getElementById('loading').style.display = 'none';
+      alert('Error analyzing image. Please try again.');
       resetAnalysis();
-      return;
-    }
-    showResult(data);
-  })
-  .catch(err => {
-    console.error('Error:', err);
-    document.getElementById('loading').style.display = 'none';
-    alert('Error analyzing image. Please try again.');
-    resetAnalysis();
-  });
+    });
 }
 
 function showResult(data) {
   const sol = data.solution;
   const conf = data.confidence;
 
-  document.getElementById('diseaseName').textContent = '🌿 ' + sol.disease;
-  document.getElementById('diseaseCause').textContent = '📌 Cause: ' + sol.cause;
-  document.getElementById('confidenceText').textContent = conf + '%';
+  document.getElementById('imgBadge').textContent = '✅ Analysis Complete!';
+  document.getElementById('imgBadge').style.background = '#d4edda';
+  document.getElementById('imgBadge').style.color = '#155724';
 
+  document.getElementById('diseaseName').textContent = '🌿 ' + sol.disease;
+  document.getElementById('diseaseCause').textContent = '📌 ' + sol.cause;
+  document.getElementById('confidenceText').textContent = conf + '%';
   setTimeout(() => {
     document.getElementById('confidenceFill').style.width = conf + '%';
   }, 300);
@@ -457,7 +500,6 @@ function showResult(data) {
   document.getElementById('p1').textContent = sol.disease;
   document.getElementById('p2').innerHTML = '<span class="severity-badge severity-' + sol.severity + '">' + sol.severity + '</span>';
   document.getElementById('p3').textContent = sol.symptoms;
-
   const solutionsList = sol.solutions.map(s => '<li>' + s + '</li>').join('');
   document.getElementById('p4').innerHTML = '<ul class="solutions-list">' + solutionsList + '</ul>';
   document.getElementById('p5').textContent = sol.fertilizer;
@@ -465,32 +507,31 @@ function showResult(data) {
   document.getElementById('p7').textContent = '⏱ ' + sol.recovery_days;
 
   document.getElementById('resultContainer').style.display = 'block';
-  document.getElementById('resultContainer').scrollIntoView({behavior: 'smooth'});
+  document.getElementById('resultContainer').scrollIntoView({behavior:'smooth'});
 }
 
 function resetAnalysis() {
   selectedFile = null;
   document.getElementById('fileInput').value = '';
+  document.getElementById('cameraInput').value = '';
   document.getElementById('uploadBox').style.display = 'block';
-  document.getElementById('previewContainer').style.display = 'none';
+  document.getElementById('analysisLayout').style.display = 'none';
+  document.getElementById('loading').style.display = 'none';
   document.getElementById('resultContainer').style.display = 'none';
+  document.getElementById('errorCard').style.display = 'none';
   document.getElementById('confidenceFill').style.width = '0%';
+  document.getElementById('analyzeBtn').style.display = 'block';
 }
 
-// Drag and Drop
 const uploadBox = document.getElementById('uploadBox');
-uploadBox.addEventListener('dragover', (e) => {
+uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.style.borderColor='#1a7a3c'; });
+uploadBox.addEventListener('dragleave', () => { uploadBox.style.borderColor='#2ecc71'; });
+uploadBox.addEventListener('drop', e => {
   e.preventDefault();
-  uploadBox.classList.add('dragover');
-});
-uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('dragover'));
-uploadBox.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadBox.classList.remove('dragover');
+  uploadBox.style.borderColor = '#2ecc71';
   const file = e.dataTransfer.files[0];
   if (file && file.type.startsWith('image/')) {
-    const fakeEvent = { target: { files: [file] } };
-    previewImage(fakeEvent);
+    previewImage({ target: { files: [file] } });
   }
 });
 </script>
