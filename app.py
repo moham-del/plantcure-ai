@@ -13,18 +13,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs('model', exist_ok=True)
 
-# =======================================
-# Hugging Face Model URLs
-# =======================================
-MODEL_URL = "https://huggingface.co/MSAYE/plantcure-ai/resolve/main/plantcure_model.h5"
-CLASS_URL = "https://huggingface.co/MSAYE/plantcure-ai/resolve/main/class_names.json"
 
-# =======================================
-# Download Model
-# =======================================
+MODEL_URL = "https://huggingface.co/MSAYE/plantcure-ai/blob/main/plantcure_model.keras"
+CLASS_URL = "https://huggingface.co/MSAYE/plantcure-ai/blob/main/class_names.json"
+
 def download_model():
     os.makedirs('model', exist_ok=True)
-    model_path = 'model/plantcure_model.h5'
+
+    model_path = 'model/plantcure_model.keras'
     if not os.path.exists(model_path) or os.path.getsize(model_path) < 1000000:
         print("📥 Downloading model from Hugging Face...")
         try:
@@ -55,15 +51,12 @@ def download_model():
 
 download_model()
 
-# =======================================
-# Load AI Model
-# =======================================
 model = None
 class_names = []
 
 try:
     import tensorflow as tf
-    model_path = 'model/plantcure_model.h5'
+    model_path = 'model/plantcure_model.keras'
     if os.path.exists(model_path) and os.path.getsize(model_path) > 1000000:
         print("🌿 Loading AI Model...")
         model = tf.keras.models.load_model(model_path)
@@ -75,47 +68,44 @@ try:
 except Exception as e:
     print(f"⚠️ Model error: {e}")
 
-# =======================================
-# 38 Disease Solutions Database
-# =======================================
 disease_solutions = {
     "Apple___Apple_scab": {
         "disease": "Apple Scab",
         "severity": "Medium",
         "cause": "Venturia inaequalis fungus",
-        "symptoms": "Olive-green to brown spots on leaves and fruits",
-        "solutions": ["Remove infected leaves immediately","Apply fungicide (myclobutanil)","Prune for better air circulation","Rake fallen leaves in autumn","Use scab-resistant apple varieties"],
-        "fertilizer": "Balanced NPK with calcium",
+        "symptoms": "Olive-green to black spots on leaves and fruits",
+        "solutions": ["Remove infected leaves", "Apply fungicide spray", "Improve air circulation", "Prune affected branches", "Use resistant varieties"],
+        "fertilizer": "Balanced NPK fertilizer",
         "organic": "Neem oil spray every 7 days",
-        "recovery_days": "21-30 days"
+        "recovery_days": "14-21 days"
     },
     "Apple___Black_rot": {
         "disease": "Apple Black Rot",
         "severity": "High",
         "cause": "Botryosphaeria obtusa fungus",
-        "symptoms": "Brown circular spots on leaves, black rotting fruits",
-        "solutions": ["Remove mummified fruits","Prune dead wood completely","Apply captan fungicide","Disinfect pruning tools","Improve orchard drainage"],
+        "symptoms": "Brown circular lesions on leaves, black rotting fruits",
+        "solutions": ["Remove mummified fruits", "Prune infected branches", "Apply copper fungicide", "Destroy infected debris", "Maintain tree vigor"],
         "fertilizer": "Potassium-rich fertilizer",
-        "organic": "Copper spray every 10 days",
-        "recovery_days": "30-45 days"
+        "organic": "Bordeaux mixture spray",
+        "recovery_days": "21-30 days"
     },
     "Apple___Cedar_apple_rust": {
         "disease": "Apple Cedar Rust",
         "severity": "Medium",
         "cause": "Gymnosporangium juniperi-virginianae fungus",
-        "symptoms": "Bright orange-yellow spots on upper leaf surface",
-        "solutions": ["Apply myclobutanil fungicide","Remove nearby juniper trees","Spray preventively in spring","Use rust-resistant varieties","Monitor weekly in wet weather"],
-        "fertilizer": "NPK 10-10-10 balanced",
-        "organic": "Sulfur spray every 7-10 days",
-        "recovery_days": "14-21 days"
+        "symptoms": "Yellow-orange spots on upper leaf surface",
+        "solutions": ["Remove nearby cedar trees", "Apply myclobutanil fungicide", "Spray during wet weather", "Use resistant apple varieties", "Monitor regularly"],
+        "fertilizer": "Balanced NPK fertilizer",
+        "organic": "Sulfur-based spray",
+        "recovery_days": "14-20 days"
     },
     "Apple___healthy": {
         "disease": "Healthy Apple Plant! 🎉",
         "severity": "None",
         "cause": "No disease detected",
-        "symptoms": "Plant is healthy and growing well",
-        "solutions": ["Continue regular watering","Maintain proper sunlight","Apply fertilizer monthly","Monitor pests weekly","Prune annually for shape"],
-        "fertilizer": "NPK 20-20-20",
+        "symptoms": "Plant is perfectly healthy",
+        "solutions": ["Continue regular watering", "Maintain proper pruning", "Apply balanced fertilizer", "Monitor for pests", "Ensure good drainage"],
+        "fertilizer": "NPK 10-10-10",
         "organic": "Compost tea monthly",
         "recovery_days": "No treatment needed"
     },
@@ -124,17 +114,17 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Maintain soil pH 4.5-5.5","Regular watering","Mulch around base","Prune old canes","Monitor birds"],
-        "fertilizer": "Acidic fertilizer (ammonium sulfate)",
-        "organic": "Pine bark mulch",
+        "solutions": ["Regular watering", "Acidic soil maintenance", "Mulching", "Pruning old canes", "Balanced fertilization"],
+        "fertilizer": "Acidic fertilizer (pH 4.5-5.5)",
+        "organic": "Pine needle mulch",
         "recovery_days": "No treatment needed"
     },
     "Cherry_(including_sour)___Powdery_mildew": {
         "disease": "Cherry Powdery Mildew",
         "severity": "Medium",
         "cause": "Podosphaera clandestina fungus",
-        "symptoms": "White powdery coating on young leaves",
-        "solutions": ["Apply sulfur-based fungicide","Improve air circulation","Remove infected shoots","Avoid overhead watering","Apply potassium bicarbonate"],
+        "symptoms": "White powdery coating on leaves and shoots",
+        "solutions": ["Apply sulfur fungicide", "Improve air circulation", "Remove infected shoots", "Avoid overhead irrigation", "Use resistant varieties"],
         "fertilizer": "Low nitrogen fertilizer",
         "organic": "Baking soda + neem oil spray",
         "recovery_days": "14-21 days"
@@ -144,79 +134,79 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular watering","Annual pruning","Fertilize in spring","Bird protection nets","Monitor for pests"],
-        "fertilizer": "NPK 12-12-12",
-        "organic": "Compost annually",
+        "solutions": ["Regular watering", "Proper pruning", "Pest monitoring", "Balanced fertilizer", "Good drainage"],
+        "fertilizer": "NPK balanced fertilizer",
+        "organic": "Compost application",
         "recovery_days": "No treatment needed"
     },
     "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
         "disease": "Corn Gray Leaf Spot",
         "severity": "High",
         "cause": "Cercospora zeae-maydis fungus",
-        "symptoms": "Rectangular gray-brown lesions on leaves",
-        "solutions": ["Apply strobilurin fungicide","Plant resistant hybrids","Rotate crops annually","Till crop residue","Improve field drainage"],
+        "symptoms": "Rectangular gray-tan lesions on leaves",
+        "solutions": ["Apply strobilurin fungicide", "Plant resistant hybrids", "Crop rotation", "Tillage to reduce debris", "Monitor humidity"],
         "fertilizer": "Nitrogen-rich fertilizer",
         "organic": "Trichoderma bio-fungicide",
-        "recovery_days": "21-30 days"
+        "recovery_days": "21-28 days"
     },
     "Corn_(maize)___Common_rust_": {
         "disease": "Corn Common Rust",
         "severity": "Medium",
         "cause": "Puccinia sorghi fungus",
         "symptoms": "Small brown pustules on both leaf surfaces",
-        "solutions": ["Apply fungicide early","Plant resistant varieties","Monitor weekly","Remove heavily infected leaves","Ensure good air circulation"],
+        "solutions": ["Apply fungicide early", "Plant resistant varieties", "Remove infected leaves", "Ensure air circulation", "Monitor regularly"],
         "fertilizer": "Balanced NPK fertilizer",
-        "organic": "Sulfur spray every 7 days",
+        "organic": "Sulfur spray",
         "recovery_days": "14-20 days"
     },
     "Corn_(maize)___Northern_Leaf_Blight": {
         "disease": "Corn Northern Leaf Blight",
         "severity": "High",
         "cause": "Exserohilum turcicum fungus",
-        "symptoms": "Long cigar-shaped gray-green lesions",
-        "solutions": ["Apply propiconazole fungicide","Use resistant hybrids","Crop rotation","Remove crop debris","Apply at early stage"],
-        "fertilizer": "Potassium + phosphorus fertilizer",
+        "symptoms": "Long elliptical gray-green lesions on leaves",
+        "solutions": ["Apply propiconazole fungicide", "Use resistant hybrids", "Crop rotation", "Remove crop debris", "Plant early"],
+        "fertilizer": "High nitrogen fertilizer",
         "organic": "Neem oil spray",
-        "recovery_days": "21-28 days"
+        "recovery_days": "21-30 days"
     },
     "Corn_(maize)___healthy": {
         "disease": "Healthy Corn Plant! 🎉",
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular irrigation","Proper spacing","Nitrogen fertilization","Weed control","Monitor for pests"],
-        "fertilizer": "Urea + NPK 15-15-15",
-        "organic": "Compost + manure",
+        "solutions": ["Regular irrigation", "Proper spacing", "Weed control", "Balanced fertilizer", "Pest monitoring"],
+        "fertilizer": "NPK 20-20-20",
+        "organic": "Compost application",
         "recovery_days": "No treatment needed"
     },
     "Grape___Black_rot": {
         "disease": "Grape Black Rot",
         "severity": "High",
         "cause": "Guignardia bidwellii fungus",
-        "symptoms": "Brown spots on leaves, black shriveled fruits",
-        "solutions": ["Apply myclobutanil fungicide","Remove mummified berries","Prune for air circulation","Apply before bloom","Remove infected clusters"],
-        "fertilizer": "Balanced grape fertilizer",
-        "organic": "Copper hydroxide spray",
-        "recovery_days": "21-35 days"
+        "symptoms": "Brown circular lesions, black mummified berries",
+        "solutions": ["Remove mummified berries", "Apply mancozeb fungicide", "Improve canopy airflow", "Prune properly", "Destroy infected debris"],
+        "fertilizer": "Potassium-rich fertilizer",
+        "organic": "Bordeaux mixture",
+        "recovery_days": "21-30 days"
     },
     "Grape___Esca_(Black_Measles)": {
         "disease": "Grape Esca (Black Measles)",
         "severity": "Critical",
         "cause": "Multiple fungal pathogens",
-        "symptoms": "Tiger stripe pattern on leaves, wood decay",
-        "solutions": ["Remove infected wood","Apply wound sealant","No chemical cure available","Remove severely infected vines","Prevent pruning wounds"],
+        "symptoms": "Tiger-stripe pattern on leaves, internal wood decay",
+        "solutions": ["Remove severely infected vines", "Apply wound sealants", "Avoid water stress", "Proper pruning hygiene", "No chemical cure available"],
         "fertilizer": "Balanced nutrition program",
-        "organic": "Trichoderma wound treatment",
-        "recovery_days": "Long term management required"
+        "organic": "Trichoderma treatment",
+        "recovery_days": "Chronic - long term management"
     },
     "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
         "disease": "Grape Leaf Blight",
         "severity": "Medium",
-        "cause": "Isariopsis clavispora fungus",
-        "symptoms": "Dark brown irregular spots on leaves",
-        "solutions": ["Apply copper fungicide","Remove infected leaves","Improve air circulation","Avoid overhead irrigation","Apply preventive sprays"],
-        "fertilizer": "Potassium-rich fertilizer",
-        "organic": "Bordeaux mixture spray",
+        "cause": "Pseudocercospora vitis fungus",
+        "symptoms": "Angular dark brown spots on leaves",
+        "solutions": ["Apply copper fungicide", "Remove infected leaves", "Improve air circulation", "Reduce humidity", "Proper canopy management"],
+        "fertilizer": "Balanced NPK",
+        "organic": "Copper hydroxide spray",
         "recovery_days": "14-21 days"
     },
     "Grape___healthy": {
@@ -224,47 +214,47 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular pruning","Proper trellising","Monitor weekly","Adequate irrigation","Annual fertilization"],
-        "fertilizer": "NPK 10-10-10 + micronutrients",
-        "organic": "Compost tea",
+        "solutions": ["Regular pruning", "Proper trellising", "Irrigation management", "Pest monitoring", "Balanced nutrition"],
+        "fertilizer": "NPK with micronutrients",
+        "organic": "Compost + seaweed extract",
         "recovery_days": "No treatment needed"
     },
     "Orange___Haunglongbing_(Citrus_greening)": {
         "disease": "Citrus Greening (HLB)",
         "severity": "Critical",
-        "cause": "Candidatus Liberibacter bacterium by psyllid",
-        "symptoms": "Yellow shoots, blotchy mottled leaves, bitter fruits",
-        "solutions": ["No cure - remove infected trees","Control Asian citrus psyllid","Apply systemic insecticide","Use disease-free nursery plants","Quarantine infected areas"],
+        "cause": "Candidatus Liberibacter bacteria spread by psyllids",
+        "symptoms": "Yellow shoots, blotchy mottled leaves, small lopsided fruits",
+        "solutions": ["Remove infected trees immediately", "Control Asian citrus psyllid", "Apply systemic insecticide", "Use certified disease-free plants", "No cure available"],
         "fertilizer": "Micronutrient foliar spray",
-        "organic": "Neem for psyllid control",
+        "organic": "Neem oil for psyllid control",
         "recovery_days": "No cure - tree removal required"
     },
     "Peach___Bacterial_spot": {
         "disease": "Peach Bacterial Spot",
         "severity": "High",
         "cause": "Xanthomonas arboricola bacteria",
-        "symptoms": "Water-soaked spots on leaves and fruits",
-        "solutions": ["Apply copper bactericide","Avoid overhead irrigation","Plant resistant varieties","Prune in dry weather","Apply in early spring"],
+        "symptoms": "Water-soaked spots on leaves, cracked fruits",
+        "solutions": ["Apply copper bactericide", "Prune for air circulation", "Avoid overhead irrigation", "Remove infected fruits", "Use resistant varieties"],
         "fertilizer": "Calcium-rich fertilizer",
         "organic": "Copper hydroxide spray",
-        "recovery_days": "21-30 days"
+        "recovery_days": "21-28 days"
     },
     "Peach___healthy": {
         "disease": "Healthy Peach Plant! 🎉",
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular pruning","Proper irrigation","Annual fertilization","Thin fruits early","Monitor for pests"],
-        "fertilizer": "NPK 15-15-15",
-        "organic": "Compost annually",
+        "solutions": ["Regular watering", "Annual pruning", "Thinning fruits", "Pest monitoring", "Balanced fertilizer"],
+        "fertilizer": "Balanced NPK fertilizer",
+        "organic": "Compost application",
         "recovery_days": "No treatment needed"
     },
     "Pepper,_bell___Bacterial_spot": {
         "disease": "Pepper Bell Bacterial Spot",
         "severity": "High",
-        "cause": "Xanthomonas bacteria infection",
+        "cause": "Xanthomonas bacteria",
         "symptoms": "Water-soaked spots, dark lesions on fruits",
-        "solutions": ["Remove infected parts","Apply copper bactericide","Avoid overhead irrigation","Use certified seeds","Rotate crops"],
+        "solutions": ["Remove infected parts", "Apply copper bactericide", "Avoid overhead watering", "Use certified seeds", "Crop rotation"],
         "fertilizer": "Calcium nitrate fertilizer",
         "organic": "Copper hydroxide spray every 7 days",
         "recovery_days": "21-28 days"
@@ -274,7 +264,7 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular watering","6-8 hours sunlight","Monthly fertilization","Weekly pest monitoring","pH 6.0-6.8"],
+        "solutions": ["Regular watering", "6-8 hours sunlight", "Monthly fertilizer", "Pest monitoring", "pH 6.0-6.8"],
         "fertilizer": "NPK 10-10-10",
         "organic": "Compost tea every 2 weeks",
         "recovery_days": "No treatment needed"
@@ -283,9 +273,9 @@ disease_solutions = {
         "disease": "Potato Early Blight",
         "severity": "Medium",
         "cause": "Alternaria solani fungus",
-        "symptoms": "Dark brown circular spots with yellow halos",
-        "solutions": ["Remove infected leaves","Apply chlorothalonil","Proper plant spacing","Avoid wetting foliage","Apply mulch"],
-        "fertilizer": "NPK 15-15-15 + Potassium",
+        "symptoms": "Dark brown spots with yellow halos",
+        "solutions": ["Remove infected leaves", "Apply chlorothalonil", "Proper spacing", "Avoid wetting foliage", "Apply mulch"],
+        "fertilizer": "NPK 15-15-15",
         "organic": "Neem oil every 5-7 days",
         "recovery_days": "14-21 days"
     },
@@ -294,8 +284,8 @@ disease_solutions = {
         "severity": "Critical",
         "cause": "Phytophthora infestans",
         "symptoms": "Dark water-soaked lesions, white fuzzy growth",
-        "solutions": ["Destroy infected plants","Apply Metalaxyl+Mancozeb","Improve drainage","Avoid same location","Use resistant varieties"],
-        "fertilizer": "High Potassium fertilizer",
+        "solutions": ["Destroy infected plants", "Apply Metalaxyl fungicide", "Improve drainage", "Avoid same location", "Use resistant varieties"],
+        "fertilizer": "High Potassium (K2SO4)",
         "organic": "Bordeaux mixture 1%",
         "recovery_days": "30-45 days"
     },
@@ -304,7 +294,7 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular deep watering","Hill up soil","Balanced fertilizer","Monitor beetles","Good drainage"],
+        "solutions": ["Deep watering", "Hill up soil", "Balanced fertilizer", "Beetle monitoring", "Good drainage"],
         "fertilizer": "NPK 20-20-20",
         "organic": "Seaweed extract monthly",
         "recovery_days": "No treatment needed"
@@ -314,9 +304,9 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Annual pruning","Proper trellising","Regular irrigation","Mulching","Monitor for pests"],
-        "fertilizer": "NPK 10-10-10",
-        "organic": "Compost annually",
+        "solutions": ["Regular pruning", "Proper trellising", "Mulching", "Irrigation", "Pest monitoring"],
+        "fertilizer": "Balanced fertilizer",
+        "organic": "Compost application",
         "recovery_days": "No treatment needed"
     },
     "Soybean___healthy": {
@@ -324,8 +314,8 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Proper spacing","Crop rotation","Weed control","Monitor pests","Adequate irrigation"],
-        "fertilizer": "Phosphorus + Potassium",
+        "solutions": ["Proper spacing", "Weed control", "Irrigation management", "Pest scouting", "Crop rotation"],
+        "fertilizer": "Phosphorus-rich fertilizer",
         "organic": "Rhizobium inoculant",
         "recovery_days": "No treatment needed"
     },
@@ -333,20 +323,20 @@ disease_solutions = {
         "disease": "Squash Powdery Mildew",
         "severity": "Medium",
         "cause": "Podosphaera xanthii fungus",
-        "symptoms": "White powdery patches on leaves",
-        "solutions": ["Apply sulfur fungicide","Improve air circulation","Remove infected leaves","Avoid overhead watering","Apply potassium bicarbonate"],
-        "fertilizer": "Low nitrogen balanced fertilizer",
-        "organic": "Baking soda spray weekly",
-        "recovery_days": "10-14 days"
+        "symptoms": "White powdery spots on leaves",
+        "solutions": ["Apply sulfur fungicide", "Improve air circulation", "Remove infected leaves", "Avoid overhead watering", "Plant resistant varieties"],
+        "fertilizer": "Low nitrogen fertilizer",
+        "organic": "Baking soda + neem oil",
+        "recovery_days": "14-21 days"
     },
     "Strawberry___Leaf_scorch": {
         "disease": "Strawberry Leaf Scorch",
         "severity": "Medium",
         "cause": "Diplocarpon earlianum fungus",
-        "symptoms": "Small purple spots enlarging with tan centers",
-        "solutions": ["Remove infected leaves","Apply captan fungicide","Avoid wetting leaves","Improve air circulation","Use resistant varieties"],
-        "fertilizer": "Balanced strawberry fertilizer",
-        "organic": "Copper spray every 10 days",
+        "symptoms": "Dark purple irregular spots, scorched appearance",
+        "solutions": ["Remove infected leaves", "Apply captan fungicide", "Improve drainage", "Avoid overhead watering", "Replace old plantings"],
+        "fertilizer": "Balanced NPK fertilizer",
+        "organic": "Neem oil spray",
         "recovery_days": "14-21 days"
     },
     "Strawberry___healthy": {
@@ -354,9 +344,9 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is healthy",
-        "solutions": ["Regular watering","Mulching","Runner removal","Annual replanting","Monitor pests"],
-        "fertilizer": "NPK 10-10-10",
-        "organic": "Compost tea",
+        "solutions": ["Regular watering", "Mulching", "Runner management", "Pest monitoring", "Proper nutrition"],
+        "fertilizer": "Balanced strawberry fertilizer",
+        "organic": "Compost mulch",
         "recovery_days": "No treatment needed"
     },
     "Tomato___Bacterial_spot": {
@@ -364,7 +354,7 @@ disease_solutions = {
         "severity": "High",
         "cause": "Xanthomonas vesicatoria bacteria",
         "symptoms": "Small water-soaked spots, yellowing",
-        "solutions": ["Remove infected plants","Apply copper bactericide","Avoid wet plants","Disinfect tools","Use resistant varieties"],
+        "solutions": ["Remove infected plants", "Apply copper bactericide", "Avoid wet plants", "Disinfect tools", "Use resistant varieties"],
         "fertilizer": "Calcium-rich fertilizer",
         "organic": "Copper soap spray weekly",
         "recovery_days": "21-30 days"
@@ -373,8 +363,8 @@ disease_solutions = {
         "disease": "Tomato Early Blight",
         "severity": "Medium",
         "cause": "Alternaria solani fungus",
-        "symptoms": "Brown spots with concentric rings",
-        "solutions": ["Remove infected leaves","Apply copper fungicide","Mulch around base","Water at soil level","Improve air circulation"],
+        "symptoms": "Brown spots with rings, yellowing",
+        "solutions": ["Remove infected leaves", "Apply copper fungicide", "Mulch base", "Water at soil level", "Improve airflow"],
         "fertilizer": "NPK 10-10-10",
         "organic": "Neem oil + baking soda",
         "recovery_days": "14-21 days"
@@ -383,8 +373,8 @@ disease_solutions = {
         "disease": "Tomato Late Blight",
         "severity": "Critical",
         "cause": "Phytophthora infestans",
-        "symptoms": "Dark brown-black lesions, white mold",
-        "solutions": ["Destroy infected plants","Apply Mancozeb+Metalaxyl","No overhead irrigation","Increase plant spacing","Resistant varieties"],
+        "symptoms": "Dark lesions, white mold under leaves",
+        "solutions": ["Destroy infected plants", "Apply Mancozeb", "No overhead irrigation", "Increase spacing", "Resistant varieties"],
         "fertilizer": "Potassium sulfate",
         "organic": "Bordeaux mixture every 5 days",
         "recovery_days": "30-45 days"
@@ -393,9 +383,9 @@ disease_solutions = {
         "disease": "Tomato Leaf Mold",
         "severity": "Medium",
         "cause": "Passalora fulva fungus",
-        "symptoms": "Yellow patches upper leaf, olive mold below",
-        "solutions": ["Reduce humidity below 85%","Improve ventilation","Remove infected leaves","Apply chlorothalonil","Space plants wider"],
-        "fertilizer": "Balanced NPK low nitrogen",
+        "symptoms": "Yellow patches, olive mold below",
+        "solutions": ["Reduce humidity", "Improve ventilation", "Remove infected leaves", "Apply chlorothalonil", "Wider spacing"],
+        "fertilizer": "Low nitrogen NPK",
         "organic": "Baking soda + neem oil",
         "recovery_days": "14-21 days"
     },
@@ -403,8 +393,8 @@ disease_solutions = {
         "disease": "Tomato Septoria Leaf Spot",
         "severity": "Medium",
         "cause": "Septoria lycopersici fungus",
-        "symptoms": "Small circular spots dark borders light centers",
-        "solutions": ["Remove lower leaves","Apply mancozeb","Avoid wetting leaves","Add mulch","Stake plants"],
+        "symptoms": "Small circular spots with dark borders",
+        "solutions": ["Remove lower leaves", "Apply mancozeb", "Avoid wetting leaves", "Thick mulch", "Stake plants"],
         "fertilizer": "Phosphorus-rich fertilizer",
         "organic": "Copper fungicide every 7-10 days",
         "recovery_days": "14-20 days"
@@ -413,8 +403,8 @@ disease_solutions = {
         "disease": "Tomato Spider Mites",
         "severity": "High",
         "cause": "Tetranychus urticae mite",
-        "symptoms": "Tiny yellow dots, fine webbing, bronzing",
-        "solutions": ["Water jets on undersides","Apply miticide","Introduce predatory mites","Remove infested leaves","Maintain soil moisture"],
+        "symptoms": "Yellow dots, fine webbing, bronzing",
+        "solutions": ["Water jets on undersides", "Apply miticide", "Predatory mites", "Remove infested leaves", "Maintain moisture"],
         "fertilizer": "Balanced fertilizer",
         "organic": "Neem oil every 3 days",
         "recovery_days": "10-14 days"
@@ -423,18 +413,18 @@ disease_solutions = {
         "disease": "Tomato Target Spot",
         "severity": "Medium",
         "cause": "Corynespora cassiicola fungus",
-        "symptoms": "Circular target-like rings on leaves",
-        "solutions": ["Apply azoxystrobin","Remove plant debris","Improve air circulation","Avoid high humidity","Rotate crops"],
+        "symptoms": "Circular target-like spots",
+        "solutions": ["Apply azoxystrobin", "Remove debris", "Improve airflow", "Avoid humidity", "Crop rotation"],
         "fertilizer": "Balanced NPK monthly",
-        "organic": "Trichoderma bio-fungicide",
+        "organic": "Trichoderma spray",
         "recovery_days": "14-21 days"
     },
     "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
         "disease": "Tomato Yellow Leaf Curl Virus",
         "severity": "Critical",
         "cause": "Begomovirus by whiteflies",
-        "symptoms": "Upward leaf curling, yellowing, stunted",
-        "solutions": ["Remove infected plants","Apply imidacloprid","Yellow sticky traps","Insect-proof nets","Resistant varieties"],
+        "symptoms": "Upward curling, yellowing, stunted",
+        "solutions": ["Remove infected plants", "Control whiteflies", "Yellow sticky traps", "Insect-proof nets", "Resistant varieties"],
         "fertilizer": "Potassium + micronutrients",
         "organic": "Neem oil + reflective mulch",
         "recovery_days": "No cure - remove plants"
@@ -442,10 +432,10 @@ disease_solutions = {
     "Tomato___Tomato_mosaic_virus": {
         "disease": "Tomato Mosaic Virus",
         "severity": "Critical",
-        "cause": "Tobamovirus by contact/insects",
-        "symptoms": "Mosaic yellow-green pattern, stunted growth",
-        "solutions": ["Remove infected plants","Control aphids/whiteflies","Disinfect tools with bleach","Wash hands before handling","Virus-free seeds only"],
-        "fertilizer": "Balanced fertilizer avoid excess nitrogen",
+        "cause": "Tobamovirus contact spread",
+        "symptoms": "Mosaic pattern, stunted, distorted",
+        "solutions": ["Remove infected plants", "Control aphids", "Disinfect tools", "Wash hands", "Virus-free seeds"],
+        "fertilizer": "Balanced fertilizer",
         "organic": "Neem for insect control",
         "recovery_days": "No cure - remove plants"
     },
@@ -454,9 +444,9 @@ disease_solutions = {
         "severity": "None",
         "cause": "No disease detected",
         "symptoms": "Plant is perfectly healthy",
-        "solutions": ["Continue watering schedule","Regular fertilization","Stake as plant grows","Weekly pest monitoring","Prune suckers"],
+        "solutions": ["Regular watering", "Fertilization", "Stake support", "Weekly monitoring", "Prune suckers"],
         "fertilizer": "NPK 8-32-16",
-        "organic": "Compost + banana peel monthly",
+        "organic": "Compost + banana peel",
         "recovery_days": "No treatment needed!"
     }
 }
@@ -470,17 +460,17 @@ def get_solution(class_name):
     return {
         "disease": class_name.replace('_', ' '),
         "severity": "Medium",
-        "cause": "Fungal or bacterial infection detected",
-        "symptoms": "Visible spots or discoloration on leaves",
+        "cause": "Fungal or bacterial infection",
+        "symptoms": "Visible spots or discoloration",
         "solutions": [
             "Consult local agricultural expert",
             "Apply broad-spectrum fungicide",
-            "Remove severely infected leaves",
-            "Improve irrigation practices",
-            "Check soil nutrient levels"
+            "Remove infected leaves",
+            "Improve irrigation",
+            "Check soil nutrients"
         ],
-        "fertilizer": "NPK 15-15-15 balanced fertilizer",
-        "organic": "Neem oil spray every 7 days",
+        "fertilizer": "NPK 15-15-15",
+        "organic": "Neem oil every 7 days",
         "recovery_days": "14-21 days"
     }
 
@@ -508,10 +498,10 @@ def predict_disease(image_path):
         return "not_leaf", 0, {
             "disease": "❌ Not a Leaf Image!",
             "severity": "Invalid",
-            "cause": "Please upload a clear plant leaf photo only",
+            "cause": "Please upload a plant leaf photo only",
             "symptoms": "Image does not appear to be a plant leaf",
             "solutions": [
-                "📸 Take clear photo of affected leaf only",
+                "📸 Take a clear photo of the affected leaf",
                 "🌿 Leaf should fill most of the frame",
                 "☀️ Use good natural lighting",
                 "🔍 Focus clearly on the leaf",
@@ -531,29 +521,26 @@ def predict_disease(image_path):
             predictions = model.predict(img_array, verbose=0)
             predicted_index = np.argmax(predictions[0])
             confidence = float(predictions[0][predicted_index]) * 100
-
             if confidence < 50:
                 return "unclear", round(confidence, 2), {
                     "disease": "🔍 Unclear - Please Retake Photo",
                     "severity": "Unknown",
-                    "cause": "Image quality too low for analysis",
-                    "symptoms": "Could not detect clear symptoms",
+                    "cause": "Image quality too low",
+                    "symptoms": "Could not detect disease clearly",
                     "solutions": [
                         "☀️ Take photo in bright daylight",
                         "🌿 Leaf should fill entire frame",
                         "🔍 Focus on affected area",
                         "📱 Hold phone steady",
-                        "📏 20-30cm distance from leaf"
+                        "📏 20-30cm distance"
                     ],
                     "fertilizer": "Retake photo for recommendation",
                     "organic": "Retake photo for recommendation",
-                    "recovery_days": "Retake clear photo first"
+                    "recovery_days": "Retake clear photo"
                 }
-
             class_name = class_names[predicted_index]
             solution = get_solution(class_name)
             return class_name, round(confidence, 2), solution
-
         except Exception as e:
             print(f"Prediction error: {e}")
 
@@ -613,8 +600,7 @@ def analyze():
 
 @app.route('/static/sw.js')
 def sw():
-    return send_from_directory('static', 'sw.js',
-                               mimetype='application/javascript')
+    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
 
 @app.route('/sitemap.xml')
 def sitemap():
