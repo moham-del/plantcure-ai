@@ -13,13 +13,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs('model', exist_ok=True)
 
-
-MODEL_URL = "https://huggingface.co/MSAYE/plantcure-ai/blob/main/plantcure_model.keras"
-CLASS_URL = "https://huggingface.co/MSAYE/plantcure-ai/blob/main/class_names.json"
+MODEL_URL = "https://huggingface.co/MSAYE/plantcure-ai/resolve/main/plantcure_model.keras"
+CLASS_URL = "https://huggingface.co/MSAYE/plantcure-ai/resolve/main/class_names.json"
 
 def download_model():
     os.makedirs('model', exist_ok=True)
-
     model_path = 'model/plantcure_model.keras'
     if not os.path.exists(model_path) or os.path.getsize(model_path) < 1000000:
         print("📥 Downloading model from Hugging Face...")
@@ -478,17 +476,32 @@ def is_leaf_image(image_path):
     try:
         img = Image.open(image_path).convert('RGB')
         img_array = np.array(img)
+
         r = img_array[:,:,0].astype(float)
         g = img_array[:,:,1].astype(float)
         b = img_array[:,:,2].astype(float)
-        green_mask = (g > r * 1.1) & (g > b * 1.1) & (g > 40)
-        yellow_mask = (r > 150) & (g > 150) & (b < 100)
-        brown_mask = (r > 100) & (g > 60) & (g < 130) & (b < 80)
-        leaf_pixels = np.sum(green_mask) + np.sum(yellow_mask) + np.sum(brown_mask)
+
+        # Green leaves
+        green_mask = (g > r * 1.05) & (g > b * 1.05) & (g > 30)
+        # Yellow leaves
+        yellow_mask = (r > 120) & (g > 120) & (b < 120)
+        # Brown/dry leaves
+        brown_mask = (r > 80) & (g > 50) & (b < 100)
+        # Dark green
+        dark_green = (g > 40) & (g > r * 1.02) & (b < 150)
+
+        leaf_pixels = (
+            np.sum(green_mask) +
+            np.sum(yellow_mask) +
+            np.sum(brown_mask) +
+            np.sum(dark_green)
+        )
         total_pixels = img_array.shape[0] * img_array.shape[1]
         leaf_ratio = leaf_pixels / total_pixels
+
         print(f"🌿 Leaf ratio: {leaf_ratio:.2f}")
-        return leaf_ratio > 0.10
+        return leaf_ratio > 0.05
+
     except Exception as e:
         print(f"Validation error: {e}")
         return True
@@ -521,7 +534,8 @@ def predict_disease(image_path):
             predictions = model.predict(img_array, verbose=0)
             predicted_index = np.argmax(predictions[0])
             confidence = float(predictions[0][predicted_index]) * 100
-            if confidence < 50:
+
+            if confidence < 40:
                 return "unclear", round(confidence, 2), {
                     "disease": "🔍 Unclear - Please Retake Photo",
                     "severity": "Unknown",
@@ -538,9 +552,11 @@ def predict_disease(image_path):
                     "organic": "Retake photo for recommendation",
                     "recovery_days": "Retake clear photo"
                 }
+
             class_name = class_names[predicted_index]
             solution = get_solution(class_name)
             return class_name, round(confidence, 2), solution
+
         except Exception as e:
             print(f"Prediction error: {e}")
 
